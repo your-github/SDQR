@@ -23,6 +23,10 @@ import {AngularFireAuthModule} from 'angularfire2/auth';
 
 /*** Angular notifications*/
 import {PushNotificationsModule, SimpleNotificationsModule} from 'angular2-notifications';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { HomeComponent } from './home/home.component';
+import { ManagementComponent } from './home/management/management.component';
 
 
 export const firebaseConfig = {
@@ -36,7 +40,11 @@ export const firebaseConfig = {
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        LoginComponent,
+        RegisterComponent,
+        HomeComponent,
+        ManagementComponent
     ],
     imports: [
         BrowserModule,

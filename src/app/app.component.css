@@ -1,0 +1,26 @@
+md-sidenav {
+    width: 200px;
+}
+
+md-toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    z-index: 999;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+md-sidenav-container {
+    margin-top: 4rem;
+
+}
+
+.asbtn {
+    width: 100%;
+    text-align: left;
+    font-size: 20px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
