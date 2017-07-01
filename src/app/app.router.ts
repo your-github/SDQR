@@ -7,11 +7,11 @@ import {RegisterComponent} from './register/register.component';
 
 
 const router: Routes = [
-    {path: 'home', component: HomeComponent},
-    {path: 'management', component: ManagementComponent},
-    {path: 'login', component: LoginComponent},
-    {path: 'register', component: RegisterComponent},
-    {path: '**', redirectTo: ''}
+  {path: '', component: LoginComponent},
+  {path: 'home', component: HomeComponent},
+  {path: 'management', component: ManagementComponent},
+  {path: 'register', component: RegisterComponent},
+  {path: '**', redirectTo: ''}
 ];
 
 export const appRoutes = RouterModule.forRoot(router, {useHash: true});
