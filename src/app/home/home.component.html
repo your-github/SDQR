@@ -1,3 +1,25 @@
-<p>
-  home works!
-</p>
+<md-toolbar color="primary">
+  <md-icon style="margin-left: auto;cursor: pointer" (click)="sidenav.toggle()">menu</md-icon>
+  <span>SDQR</span>
+</md-toolbar>
+<md-sidenav-container fullscreen>
+
+  <md-sidenav #sidenav mode="over">
+
+
+    <a  md-button class=" asbtn" (click)="sidenav.close()">
+      <md-icon>home</md-icon>
+      Home
+    </a>
+    <a md-button class="asbtn" (click)="sidenav.close()">
+      <md-icon>dashboard</md-icon>
+      Report
+    </a>
+    <a md-button class="asbtn" (click)="sidenav.close()">
+      <md-icon>exit_to_app</md-icon>
+      Logout
+    </a>
+
+  </md-sidenav>
+
+</md-sidenav-container>

@@ -5,7 +5,7 @@ import {AppComponent} from './app.component';
 
 
 /***Angular Libary*/
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 import {
     MdButtonModule, MdCardModule, MdDialogModule, MdGridListModule, MdIconModule, MdIconRegistry, MdInputModule,
     MdMenuModule,
@@ -15,6 +15,8 @@ import {
 } from '@angular/material';
 import 'hammerjs';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 
 /*** Angular Firebase*/
 import {AngularFireModule} from 'angularfire2';
@@ -24,10 +26,14 @@ import {AngularFireAuthModule} from 'angularfire2/auth';
 /*** Angular notifications*/
 import {PushNotificationsModule, SimpleNotificationsModule} from 'angular2-notifications';
 import { LoginComponent } from './login/login.component';
+
+/*** Component*/
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { ManagementComponent } from './home/management/management.component';
+/*** Router*/
 
+import {appRoutes} from './app.router';
 
 export const firebaseConfig = {
     apiKey: 'AIzaSyDKfhalS9iXAH1Lqr_Z7HcoYF0mHHmHfd0',
@@ -66,7 +72,8 @@ export const firebaseConfig = {
         AngularFireDatabaseModule,
         AngularFireAuthModule,
         PushNotificationsModule,
-        SimpleNotificationsModule
+        SimpleNotificationsModule,
+        appRoutes
 
     ],
     providers: [],
