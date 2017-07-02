@@ -13,17 +13,21 @@ export class UserService {
   }
 
   register(email, password) {
-    return this.Auth.auth.createUserWithEmailAndPassword(email, password).then(() => {
+    return this.Auth.auth.createUserWithEmailAndPassword(email, password).then((success) => {
+      console.log(success);
       return true;
-    }).catch(() => {
+    }).catch((err) => {
+      console.log(err);
       return false;
     });
   }
 
   login(email, password) {
-    return this.Auth.auth.signInWithEmailAndPassword(email, password).then(() => {
+    return this.Auth.auth.signInWithEmailAndPassword(email, password).then((success) => {
+      console.log(success);
       return true;
-    }).catch(() => {
+    }).catch((err) => {
+      console.log(err);
       return false;
     });
   }
