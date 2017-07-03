@@ -9,7 +9,7 @@ import {AppComponent} from './app.component';
 import {
     MdButtonModule, MdCardModule, MdDialogModule, MdGridListModule, MdIconModule, MdIconRegistry, MdInputModule,
     MdMenuModule,
-    MdProgressSpinnerModule,
+    MdProgressSpinnerModule, MdSelectModule,
     MdSidenavModule, MdSlideToggleModule,
     MdToolbarModule, MdTooltipModule
 } from '@angular/material';
@@ -25,15 +25,22 @@ import {AngularFireAuthModule} from 'angularfire2/auth';
 
 /*** Angular notifications*/
 import {PushNotificationsModule, SimpleNotificationsModule} from 'angular2-notifications';
-import { LoginComponent } from './login/login.component';
+import {LoginComponent} from './login/login.component';
 
 /*** Component*/
-import { RegisterComponent } from './register/register.component';
-import { HomeComponent } from './home/home.component';
-import { ManagementComponent } from './home/management/management.component';
+import {RegisterComponent} from './register/register.component';
+import {HomeComponent} from './home/home.component';
+import {ManagementComponent} from './home/management/management.component';
 /*** Router*/
 
 import {appRoutes} from './app.router';
+
+/*** Gallery*/
+import {GalleryConfig, GalleryModule} from 'ng-gallery';
+
+export const galleryConfig: GalleryConfig = {
+    // ...
+}
 
 export const firebaseConfig = {
     apiKey: 'AIzaSyDKfhalS9iXAH1Lqr_Z7HcoYF0mHHmHfd0',
@@ -67,13 +74,15 @@ export const firebaseConfig = {
         MdSidenavModule,
         MdDialogModule,
         MdSlideToggleModule,
+        MdSelectModule,
         FlexLayoutModule,
         AngularFireModule.initializeApp(firebaseConfig),
         AngularFireDatabaseModule,
         AngularFireAuthModule,
         PushNotificationsModule,
         SimpleNotificationsModule,
-        appRoutes
+        appRoutes,
+        GalleryModule.forRoot(galleryConfig)
 
     ],
     providers: [],

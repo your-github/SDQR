@@ -14,6 +14,10 @@ md-toolbar {
 
 md-sidenav-container {
     margin-top: 4rem;
+}
+.procard {
+    margin: 1rem;
+    width: 200px;
 
 }
 
@@ -23,4 +27,46 @@ md-sidenav-container {
     font-size: 20px;
     padding-top: 1rem;
     padding-bottom: 1rem;
+}
+.ownprice {
+    color: #F44336;
+
+}
+.saleprice {
+    color: #64DD17;
+}
+.namebook {
+    font-size: 1rem;
+}
+.viewbtn {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    background-color: #FF5722;
+}
+
+
+/*Show Product detail*/
+.showpic {
+
+}
+.cardprodetail {
+
+}
+.addpro {
+    position: absolute;
+    right: 10px;
+    bottom: 20px;
+}
+
+/*Insert & Update Form Book*/
+.insertcard {
+  width: 500px;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+
+}
+md-input-container {
+  width: 100%;
+  margin: 0.5rem;
 }
