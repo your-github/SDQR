@@ -1,3 +1,29 @@
-<p>
-  register works!
-</p>
+<div fxLayoutAlign="center center">
+  <md-card fxLayout="column" class="regiscard">
+    <h1>Register Form</h1>
+    <md-input-container>
+      <input mdInput type="text" placeholder="First name">
+    </md-input-container>
+    <md-input-container>
+      <input mdInput type="text" placeholder="Last name">
+    </md-input-container>
+    <md-input-container>
+      <input mdInput type="email" placeholder="Email">
+    </md-input-container>
+    <md-input-container>
+      <input mdInput type="password" placeholder="Password">
+    </md-input-container>
+    <md-input-container>
+      <input mdInput type="password" placeholder="Re-Password">
+    </md-input-container>
+    <button md-fab (click)="propic()" style="background-color: #18FFFF;color: white;margin-bottom: 1rem">
+      <md-icon>add_a_photo</md-icon>
+    </button>
+    <input type="file" id="propic" placeholder="Picture" hidden>
+    <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
+    <button type="submit" md-raised-button style="background-color: #76FF03;color: white;margin-top: 1rem">
+      Register
+    </button>
+  </md-card>
+</div>
+
