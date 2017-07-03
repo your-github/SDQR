@@ -1,12 +1,15 @@
-<div fxLayout='column' class="zero">
 
-  <div fxFlex="33" [fxFlex.md]="100" class="one" style="background: red">1</div>
-  <div fxFlex="33" [fxLayout]="150" fxLayout.md="row" class="two">
-
-    <div fxFlex="22"    fxFlex.md="10px" fxHide.lg   style="background: blue" class="two_one">2</div>
-    <div fxFlex="205px" fxFlex.md="65"  style="background: green"    class="two_two">3</div>
-
-  </div>
-  <div fxFlex class="three" style="background: gold">4</div>
-
+<div fxLayoutAlign="center center">
+  <md-card fxLayout="column" class="logincard">
+    <h1>Login</h1>
+    <md-input-container>
+      <input mdInput type="email" placeholder="Email or Username">
+    </md-input-container>
+    <md-input-container>
+      <input mdInput type="password" placeholder="Password">
+    </md-input-container>
+    <button type="submit" md-raised-button style="background-color: #2196F3;color: white;margin-top: 1rem">
+      Login
+    </button>
+  </md-card>
 </div>
