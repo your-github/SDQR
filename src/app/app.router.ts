@@ -1,16 +1,16 @@
 import {Routes, RouterModule} from '@angular/router';
+import {LoginSecureService} from './protected/login.service';
+import {ShareSecureService} from './protected/share.service';
 
 import {HomeComponent} from './home/home.component';
-import {ManagementComponent} from './home/management/management.component';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
 
 
 const router: Routes = [
-  {path: '', component: LoginComponent},
-  {path: 'home', component: HomeComponent},
-  {path: 'management', component: ManagementComponent},
-  {path: 'register', component: RegisterComponent},
+  {path: '', component: LoginComponent, canActivate: [LoginSecureService]},
+  {path: 'home', component: HomeComponent, canActivate: [ShareSecureService]},
+  {path: 'register', component: RegisterComponent, canActivate: [ShareSecureService]},
   {path: '**', redirectTo: ''}
 ];
 

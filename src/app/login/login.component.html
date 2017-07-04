@@ -1,15 +1,19 @@
 
-<div fxLayoutAlign="center center">
-  <md-card fxLayout="column" class="logincard">
-    <h1>Login</h1>
-    <md-input-container>
-      <input mdInput type="email" placeholder="Email or Username">
-    </md-input-container>
-    <md-input-container>
-      <input mdInput type="password" placeholder="Password">
-    </md-input-container>
-    <button type="submit" md-raised-button style="background-color: #2196F3;color: white;margin-top: 1rem">
-      Login
-    </button>
-  </md-card>
-</div>
+<form novalidate [formGroup]="fLogin" (submit)="doLogin()" >
+  <div fxLayoutAlign="center center">
+    <md-card fxLayout="column" class="logincard">
+      <h1>Login</h1>
+        <md-input-container>
+          <input mdInput type="email" placeholder="Email" formControlName="email">
+        </md-input-container>
+        <md-input-container>
+          <input mdInput type="password" placeholder="Password" formControlName="password">
+        </md-input-container>
+        <button type="submit" md-raised-button class="btnSumit">
+          Login
+        </button>
+    </md-card>
+  </div>
+</form>
+
+<simple-notifications [options]="loginOpton"></simple-notifications>

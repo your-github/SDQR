@@ -1,17 +1,21 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {AppComponent} from './app.component';
+import {edSecure} from './service/encryption/secure';
+import {LoginSecureService} from './protected/login.service';
+import {ShareSecureService} from './protected/share.service';
 
 
 /***Angular Libary*/
 
 import {
-    MdButtonModule, MdCardModule, MdDialogModule, MdGridListModule, MdIconModule, MdIconRegistry, MdInputModule,
-    MdMenuModule,
-    MdProgressSpinnerModule, MdSelectModule,
-    MdSidenavModule, MdSlideToggleModule,
-    MdToolbarModule, MdTooltipModule
+  MdButtonModule, MdCardModule, MdDialogModule, MdGridListModule, MdIconModule, MdIconRegistry, MdInputModule,
+  MdMenuModule,
+  MdProgressSpinnerModule, MdSelectModule,
+  MdSidenavModule, MdSlideToggleModule,
+  MdToolbarModule, MdTooltipModule
 } from '@angular/material';
 import 'hammerjs';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -30,7 +34,6 @@ import {LoginComponent} from './login/login.component';
 /*** Component*/
 import {RegisterComponent} from './register/register.component';
 import {HomeComponent} from './home/home.component';
-import {ManagementComponent} from './home/management/management.component';
 /*** Router*/
 
 import {appRoutes} from './app.router';
@@ -39,54 +42,55 @@ import {appRoutes} from './app.router';
 import {GalleryConfig, GalleryModule} from 'ng-gallery';
 
 export const galleryConfig: GalleryConfig = {
-    // ...
+  // ...
 }
 
 export const firebaseConfig = {
-    apiKey: 'AIzaSyDKfhalS9iXAH1Lqr_Z7HcoYF0mHHmHfd0',
-    authDomain: 'dbook-8d9fa.firebaseapp.com/',
-    databaseURL: 'https://dbook-8d9fa.firebaseapp.com/',
-    projectId: 'dbook-8d9fa',
-    storageBucket: 'dbook-8d9fa.appspot.com',
-    messagingSenderId: '951635947188'
+  apiKey: 'AIzaSyDKfhalS9iXAH1Lqr_Z7HcoYF0mHHmHfd0',
+  authDomain: 'dbook-8d9fa.firebaseapp.com',
+  databaseURL: 'https://dbook-8d9fa.firebaseapp.com',
+  projectId: 'dbook-8d9fa',
+  storageBucket: 'dbook-8d9fa.appspot.com',
+  messagingSenderId: '951635947188'
 };
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        LoginComponent,
-        RegisterComponent,
-        HomeComponent,
-        ManagementComponent
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        MdButtonModule,
-        MdToolbarModule,
-        MdMenuModule,
-        MdCardModule,
-        MdInputModule,
-        MdIconModule,
-        MdProgressSpinnerModule,
-        MdTooltipModule,
-        MdGridListModule,
-        MdSidenavModule,
-        MdDialogModule,
-        MdSlideToggleModule,
-        MdSelectModule,
-        FlexLayoutModule,
-        AngularFireModule.initializeApp(firebaseConfig),
-        AngularFireDatabaseModule,
-        AngularFireAuthModule,
-        PushNotificationsModule,
-        SimpleNotificationsModule,
-        appRoutes,
-        GalleryModule.forRoot(galleryConfig)
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    RegisterComponent,
+    HomeComponent
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MdButtonModule,
+    MdToolbarModule,
+    MdMenuModule,
+    MdCardModule,
+    MdInputModule,
+    MdIconModule,
+    MdProgressSpinnerModule,
+    MdTooltipModule,
+    MdGridListModule,
+    MdSidenavModule,
+    MdDialogModule,
+    MdSlideToggleModule,
+    MdSelectModule,
+    FlexLayoutModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    PushNotificationsModule,
+    SimpleNotificationsModule.forRoot(),
+    appRoutes,
+    GalleryModule.forRoot(galleryConfig)
 
-    ],
-    providers: [],
-    bootstrap: [AppComponent]
+  ],
+  providers: [edSecure, LoginSecureService, ShareSecureService],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

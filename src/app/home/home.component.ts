@@ -11,6 +11,10 @@ import {Component, OnInit} from '@angular/core';
 export class HomeComponent implements OnInit {
   cols: number;
 
+  checkInsert = false;
+  checkDetail = false;
+  checkUpdate = false;
+
   constructor() {
   }
 
@@ -36,13 +40,33 @@ export class HomeComponent implements OnInit {
     }
   }
 
-
-  picfile1() {
-    document.getElementById('picinput1').click();
-  }
-  picfile2() {
-    document.getElementById('picinput2').click();
+  picfile(fileID) {
+    document.getElementById(fileID).click();
   }
 
+  addBooks() {
+    this.checkInsert = true;
+  }
+
+  saveBook() {
+    this.checkInsert = false;
+  }
+
+  bookDetail() {
+    this.checkDetail = true;
+  }
+
+  update() {
+    this.checkUpdate = true;
+  }
+
+  updateBook() {
+    this.checkUpdate = false;
+    this.checkDetail = false;
+  }
+
+  deleteBook() {
+    this.checkDetail = false;
+  }
 
 }

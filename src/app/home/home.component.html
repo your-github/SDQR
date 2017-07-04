@@ -2,6 +2,8 @@
     <md-icon style="margin-right: auto;cursor: pointer" (click)="sidenav.toggle()">menu</md-icon>
     <span style="margin-right: auto;">SDQR</span>
 </md-toolbar>
+
+
 <md-sidenav-container fullscreen>
 
     <md-sidenav #sidenav mode="over">
@@ -28,157 +30,9 @@
         </a>
 
     </md-sidenav>
-
-    <!--Card Prduct in home Search and show product -->
-<!--<md-card>
-  <form action="">
-  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
-
-        <md-select placeholder="Catagory" fxFlex="20">
-          <md-option value="food">
-            ນິຍາຍ
-          </md-option>
-          <md-option value="food">
-            ນິຍາຍ
-          </md-option>
-        </md-select>
-
-        <md-input-container fxFlex="30">
-          <input mdInput placeholder="Search" value="">
-        </md-input-container>
-      <button md-raised-button color="primary" type="submit"><md-icon>search</md-icon></button>
-
-  </div>
-  </form>
-</md-card>
-<md-grid-list cols="{{cols}}" rowHeight="1:2">
-    <md-grid-tile>
-        <md-card class="procard">
-            <img md-card-image src="http://via.placeholder.com/150x180">
-            <md-card-content>
-                <md-card-subtitle class="namebook">Name of book </md-card-subtitle>
-                <md-card-subtitle class="ownprice">Own Price</md-card-subtitle>
-                <md-card-title class="saleprice">Sale Price</md-card-title>
-            </md-card-content>
-            <button md-mini-fab class="viewbtn"><md-icon>search</md-icon></button>
-        </md-card>
-    </md-grid-tile>
-
-
-
-</md-grid-list>-->
-
-  <!--show Product Detail-->
-<!--    <md-card class="cardprodetail">
-        <div fxLayout="row" fxLayout.sm="column" fxLayoutAlign="space-around center" >
-            <div fxFlex="30">
-                <img class="showpic" src="http://via.placeholder.com/150x180">
-            </div>
-            <div fxFlex="60">
-                <md-card-title>Name of book</md-card-title>
-                <md-card-content>
-                    <md-card-subtitle>Catagory</md-card-subtitle>
-                    <md-card-subtitle class="ownprice">Own Price</md-card-subtitle>
-                    <md-card-title class="saleprice">Sale Price</md-card-title>
-                    <p>Bookdetail dkjfskjlskdjfklsjdflksdjlfkjsdlkfjsldjflskjdflksdjflksjdlfkjsdlkfjsdlkjflskdjflksjdlkfjsdlkfjsdljflsdjfsdfljsdlkfjsdlkfjsldkfjsldkjflksdf
-                        ksfjsdkljflksdjflksdjlkfjsdlkfj</p>
-
-                </md-card-content>
-            </div>
-        </div>
-    </md-card>-->
-
-
-
-<!--<div fxLayoutAlign="center stretch" style="margin: 1rem">
-
-        <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="center center">
-            <div fxFlex="">
-                    <img style="width: 250px" src="http://via.placeholder.com/150x180" alt="">
-                <div style="margin: 1rem">
-                    <button md-raised-button style="background-color:#E65100;color: white"><md-icon>settings</md-icon>Update</button>
-                    <button md-raised-button style="background-color:#D50000;color: white"><md-icon>delete_forever</md-icon>Delete</button>
-                </div>
-
-            </div>
-            <div fxFlex="" fxLayout="column" style="">
-
-                    <h1>Book Detail</h1>
-                    <h3>Name of book</h3>
-                    <h4>Catagory</h4>
-                    <h3>Own Price 000000</h3>
-                    <h2>Sale Price 111111</h2>
-                <h1>Description</h1>
-                    <p>ksdfjlsdf
-                        sdkfjsldkfjsd
-                        sdkfjsdlkfj
-                        sdkfjsdlkfj
-                        sdkfjsdklfj
-                        sdlfjskdlfdsbr <br>
-                    sdfjslkdfjskdjflksdjf <br>
-                    dsfjskdlfjlksdjf <br>
-                    ksdfjlksdjflksdjf <br>
-                    skdlfjksdjfskdjflsj</p>
-
-
-            </div>
-        </div>
-
-</div>-->
-
-
-  <!--Form Insert Product-->
-<!--<md-grid-list cols="1" rowHeight="900px">
-  <md-grid-tile>
-    <md-card class="insertcard">
-      <h1 style="text-align: center">Insert Book</h1>
-      <br>
-      <form>
-        <md-select placeholder="Catagory">
-          <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
-          <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
-          <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
-          <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
-
-        </md-select>
-          <md-input-container>
-            <input mdInput type="text" placeholder="Book name" value="">
-          </md-input-container>
-          <md-input-container>
-            <input mdInput type="text" placeholder="Own Price" value="">
-          </md-input-container>
-          <md-input-container>
-            <input mdInput type="text" placeholder="Sale Price" value="">
-          </md-input-container>
-          <md-input-container>
-            <textarea mdInput placeholder="Description"></textarea>
-          </md-input-container>
-
-
-        <div fxLayout="row" fxLayoutAlign="center stretch" >
-          <div fxFlex="">
-            <button md-fab (click)="picfile1()" style="background-color: #00E5FF;color: white;margin-bottom: 1rem"><md-icon>add_a_photo</md-icon></button>&nbsp;<span>Font-cover</span>
-              <input type="file" id="picinput1" placeholder="Picture" hidden>
-              <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
-          </div>
-          <div fxFlex="">
-            <button md-fab (click)="picfile2()" style="background-color: #64DD17;color: white;margin-bottom: 1rem"><md-icon>add_a_photo</md-icon></button>&nbsp;<span>Back-cover</span>
-            <input type="file" id="picinput2" placeholder="Picture" hidden>
-            <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
-          </div>
-        </div>
-        <div fxLayoutAlign="center none">
-          <button type="submit" md-raised-button style="background-color: #FF6F00;color: white; margin:1rem">Save</button>
-        </div>
-
-
-      </form>
-    </md-card>
-  </md-grid-tile>
-</md-grid-list>-->
-
-<!--Form Update Prduct-->
-  <!--<md-grid-list cols="1" rowHeight="900px">
+<div *ngIf="!checkDetail">
+  <!--Form Update Prduct-->
+  <md-grid-list cols="1" rowHeight="900px" *ngIf="checkInsert">
     <md-grid-tile>
       <md-card class="insertcard">
         <h1 style="text-align: center">Update Book</h1>
@@ -207,27 +61,151 @@
 
           <div fxLayout="row" fxLayoutAlign="center stretch" >
             <div fxFlex="">
-              <button md-fab (click)="picfile1()" style="background-color: #00E5FF;color: white;margin-bottom: 1rem"><md-icon>add_a_photo</md-icon></button>&nbsp;<span>Font-cover</span>
-              <input type="file" id="picinput1" placeholder="Picture" hidden>
+              <button md-fab (click)="picfile('ipicinput1')" style="background-color: #00E5FF;color: white;margin-bottom: 1rem"><md-icon>add_a_photo</md-icon></button>&nbsp;<span>Font-cover</span>
+              <input type="file" id="ipicinput1" placeholder="Picture" hidden>
               <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
             </div>
             <div fxFlex="">
-              <button md-fab (click)="picfile2()" style="background-color: #64DD17;color: white;margin-bottom: 1rem"><md-icon>add_a_photo</md-icon></button>&nbsp;<span>Back-cover</span>
-              <input type="file" id="picinput2" placeholder="Picture" hidden>
+              <button md-fab (click)="picfile('ipicinput2')" style="background-color: #64DD17;color: white;margin-bottom: 1rem"><md-icon>add_a_photo</md-icon></button>&nbsp;<span>Back-cover</span>
+              <input type="file" id="ipicinput2" placeholder="Picture" hidden>
               <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
             </div>
           </div>
           <div fxLayoutAlign="center none">
-            <button type="submit" md-raised-button style="background-color: #FF6F00;color: white; margin:1rem">Save</button>
+            <button type="submit" md-raised-button style="background-color: #FF6F00;color: white; margin:1rem" (click)="saveBook()">Save</button>
           </div>
-
 
         </form>
       </md-card>
     </md-grid-tile>
-  </md-grid-list>-->
+  </md-grid-list>
 
 
+  <!--Card Prduct in home Search and show product -->
+<md-card *ngIf="!checkInsert">
+  <form>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
+
+          <md-select placeholder="Catagory" fxFlex="20">
+            <md-option value="food">
+              ນິຍາຍ
+            </md-option>
+            <md-option value="food">
+              ນິຍາຍ
+            </md-option>
+          </md-select>
+
+          <md-input-container fxFlex="30">
+            <input mdInput placeholder="Search" value="">
+          </md-input-container>
+        <button md-raised-button color="primary" type="submit"><md-icon>search</md-icon></button>
+
+    </div>
+  </form>
+</md-card>
+
+  <md-grid-list cols="{{cols}}" rowHeight="1:2" *ngIf="!checkInsert">
+      <md-grid-tile>
+          <md-card class="procard">
+              <img md-card-image src="http://via.placeholder.com/150x180">
+              <md-card-content>
+                  <md-card-subtitle class="namebook">Name of book </md-card-subtitle>
+                  <md-card-subtitle class="ownprice">Own Price</md-card-subtitle>
+                  <md-card-title class="saleprice">Sale Price</md-card-title>
+              </md-card-content>
+              <button md-mini-fab class="viewbtn" (click)="bookDetail()"><md-icon>search</md-icon></button>
+          </md-card>
+      </md-grid-tile>
+
+  </md-grid-list>
+
+</div>
+  <!--<app-management></app-management>-->
+  <div *ngIf="checkDetail">
+
+    <!--Form Update Prduct-->
+    <md-grid-list cols="1" rowHeight="900px" *ngIf="checkUpdate">
+      <md-grid-tile>
+        <md-card class="insertcard">
+          <h1 style="text-align: center">Update Book</h1>
+          <br>
+          <form>
+            <md-select placeholder="Catagory">
+              <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
+              <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
+              <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
+              <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
+
+            </md-select>
+            <md-input-container>
+              <input mdInput type="text" placeholder="Book name" value="">
+            </md-input-container>
+            <md-input-container>
+              <input mdInput type="text" placeholder="Own Price" value="">
+            </md-input-container>
+            <md-input-container>
+              <input mdInput type="text" placeholder="Sale Price" value="">
+            </md-input-container>
+            <md-input-container>
+              <textarea mdInput placeholder="Description"></textarea>
+            </md-input-container>
+
+
+            <div fxLayout="row" fxLayoutAlign="center stretch" >
+              <div fxFlex="">
+                <button md-fab (click)="picfile('upicinput1')" style="background-color: #00E5FF;color: white;margin-bottom: 1rem"><md-icon>add_a_photo</md-icon></button>&nbsp;<span>Font-cover</span>
+                <input type="file" id="upicinput1" placeholder="Picture" hidden>
+                <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
+              </div>
+              <div fxFlex="">
+                <button md-fab (click)="picfile('upicinput2')" style="background-color: #64DD17;color: white;margin-bottom: 1rem"><md-icon>add_a_photo</md-icon></button>&nbsp;<span>Back-cover</span>
+                <input type="file" id="upicinput2" placeholder="Picture" hidden>
+                <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
+              </div>
+            </div>
+            <div fxLayoutAlign="center none">
+              <button type="submit" md-raised-button style="background-color: #FF6F00;color: white; margin:1rem" (click)="updateBook()">Save</button>
+            </div>
+
+          </form>
+        </md-card>
+      </md-grid-tile>
+    </md-grid-list>
+
+    <div fxLayoutAlign="center stretch" style="margin: 1rem" *ngIf="!checkUpdate">
+
+      <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="center center">
+          <div fxFlex="">
+            <img style="width: 250px" src="http://via.placeholder.com/150x180" alt="">
+            <div style="margin: 1rem">
+              <button md-raised-button style="background-color:#E65100;color: white" (click)="update()"><md-icon>settings</md-icon>Update</button>
+              <button md-raised-button style="background-color:#D50000;color: white" (click)="deleteBook()"><md-icon>delete_forever</md-icon>Delete</button>
+            </div>
+          </div>
+          <div fxFlex="" fxLayout="column" style="">
+            <h1>Book Detail</h1>
+            <h3>Name of book</h3>
+            <h4>Catagory</h4>
+            <h3>Own Price 000000</h3>
+            <h2>Sale Price 111111</h2>
+            <h1>Description</h1>
+            <p>ksdfjlsdf
+                sdkfjsldkfjsd
+                sdkfjsdlkfj
+                sdkfjsdlkfj
+                sdkfjsdklfj
+                sdlfjskdlfdsbr
+            sdfjslkdfjskdjflksdjf
+            dsfjskdlfjlksdjf
+            ksdfjlksdjflksdjf
+            skdlfjksdjfskdjflsj</p>
+          </div>
+      </div>
+    </div>
+  </div>
 </md-sidenav-container>
-<!--Insert Button-->
-<button class="addpro" md-fab><md-icon>add</md-icon></button>
+
+<div *ngIf="!checkDetail">
+  <!--Insert Button-->
+  <button class="addpro" md-fab *ngIf="!checkInsert" (click)="addBooks()"><md-icon>add</md-icon></button>
+</div>

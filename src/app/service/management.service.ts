@@ -3,7 +3,6 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
-import * as firebase from 'firebase/app';
 
 @Injectable()
 export class ManagementService {
@@ -11,7 +10,7 @@ export class ManagementService {
   db: FirebaseListObservable<any>;
 
   constructor(private firebasedb: AngularFireDatabase) {
-    this.db = firebasedb.list('/dbook/book');
+    this.db = firebasedb.list('/dbook/books');
   }
 
   getBooks(): FirebaseListObservable<any> {
