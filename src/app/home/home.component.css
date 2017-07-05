@@ -59,6 +59,12 @@ md-sidenav-container {
     bottom: 20px;
 }
 
+.backhome {
+  position: absolute;
+  left: 10px;
+  top: 50px;
+}
+
 /*Insert & Update Form Book*/
 .insertcard {
   width: 500px;

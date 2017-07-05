@@ -1,90 +1,105 @@
 <md-toolbar color="primary">
-    <md-icon style="margin-right: auto;cursor: pointer" (click)="sidenav.toggle()">menu</md-icon>
-    <span style="margin-right: auto;">SDQR</span>
+  <md-icon style="margin-right: auto;cursor: pointer" (click)="sidenav.toggle()">menu</md-icon>
+  <span style="margin-right: auto;">SDQR</span>
 </md-toolbar>
 
 
 <md-sidenav-container fullscreen>
 
-    <md-sidenav #sidenav mode="over">
-        <div fxLayoutAlign="center center" style="margin: 1rem" fxLayout="column">
-          <img src="http://via.placeholder.com/64x64" alt="">
-          <h4>Name of User</h4>
-        </div>
+  <md-sidenav #sidenav mode="over">
+    <div fxLayoutAlign="center center" style="margin: 1rem" fxLayout="column">
+      <img src="http://via.placeholder.com/64x64" alt="">
+      <h4>Name of User</h4>
+    </div>
 
-        <a md-button class=" asbtn" (click)="sidenav.close()">
-            <md-icon>home</md-icon>
-            Home
-        </a>
-        <a md-button class="asbtn" (click)="sidenav.close()">
-            <md-icon>dashboard</md-icon>
-            Report
-        </a>
-        <a md-button class="asbtn" (click)="sidenav.close()">
-            <md-icon>person_add</md-icon>
-            Register
-        </a>
-        <a md-button class="asbtn" (click)="sidenav.close()">
-            <md-icon>exit_to_app</md-icon>
-            Logout
-        </a>
+    <a md-button class="asbtn" (click)="homeEvt(sidenav)">
+      <md-icon>home</md-icon>
+      Home
+    </a>
+    <a md-button class="asbtn" (click)="sidenav.close()">
+      <md-icon>dashboard</md-icon>
+      Report
+    </a>
+    <a md-button class="asbtn" (click)="registerEvt(sidenav)">
+      <md-icon>person_add</md-icon>
+      Register
+    </a>
+    <a md-button class="asbtn" (click)="sidenav.close()">
+      <md-icon>exit_to_app</md-icon>
+      Logout
+    </a>
 
-    </md-sidenav>
-<div *ngIf="!checkDetail">
-  <!--Form Insert Prduct-->
-  <md-grid-list cols="1" rowHeight="900px" *ngIf="checkInsert">
-    <md-grid-tile>
-      <md-card class="insertcard">
-        <h1 style="text-align: center">Update Book</h1>
-        <br>
-        <form>
-          <md-select placeholder="Catagory">
-            <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
-            <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
-            <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
-            <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
+  </md-sidenav>
+  <div *ngIf="!checkDetail">
+    <!--Form Insert Prduct-->
+    <md-grid-list cols="1" rowHeight="1100px" *ngIf="checkInsert">
+      <md-grid-tile>
+        <md-card class="insertcard">
+          <button md-button class="backhome" (click)="insertTohome()"><md-icon>back</md-icon></button>
+          <h1 style="text-align: center">Insert Book</h1>
+          <br>
+          <form novalidate [formGroup]="fInsert">
+            <md-select formControlName="catagory" placeholder="Catagory">
+              <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
+              <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
+              <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
+              <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
 
-          </md-select>
-          <md-input-container>
-            <input mdInput type="text" placeholder="Book name" value="">
-          </md-input-container>
-          <md-input-container>
-            <input mdInput type="text" placeholder="Own Price" value="">
-          </md-input-container>
-          <md-input-container>
-            <input mdInput type="text" placeholder="Sale Price" value="">
-          </md-input-container>
-          <md-input-container>
-            <textarea mdInput placeholder="Description"></textarea>
-          </md-input-container>
+            </md-select>
+            <md-input-container>
+              <input mdInput formControlName="bname" type="text" placeholder="Book name" value="">
+            </md-input-container>
+            <md-input-container>
+              <input mdInput formControlName="author" type="text" placeholder="Author" value="">
+            </md-input-container>
+            <md-input-container>
+              <input mdInput formControlName="import_price" type="text" placeholder="Import Price" value="">
+            </md-input-container>
+            <md-input-container>
+              <input mdInput formControlName="export_price" type="text" placeholder="Sale Price" value="">
+            </md-input-container>
+            <md-input-container>
+              <input mdInput formControlName="quantity" type="number" placeholder="Quantity" value="">
+            </md-input-container>
+            <md-input-container>
+              <textarea mdInput formControlName="description" placeholder="Description"></textarea>
+            </md-input-container>
 
 
-          <div fxLayout="row" fxLayoutAlign="center stretch" >
-            <div fxFlex="">
-              <button md-fab (click)="picfile('ipicinput1')" style="background-color: #00E5FF;color: white;margin-bottom: 1rem"><md-icon>add_a_photo</md-icon></button>&nbsp;<span>Font-cover</span>
-              <input type="file" id="ipicinput1" placeholder="Picture" hidden>
-              <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
+            <div fxLayout="row" fxLayoutAlign="center stretch">
+              <div fxFlex="">
+                <button md-fab (click)="picfile('ipicinput1')"
+                        style="background-color: #00E5FF;color: white;margin-bottom: 1rem">
+                  <md-icon>add_a_photo</md-icon>
+                </button>&nbsp;<span>Font-cover</span>
+                <input type="file" id="ipicinput1" placeholder="Picture" hidden>
+                <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
+              </div>
+              <div fxFlex="">
+                <button md-fab (click)="picfile('ipicinput2')"
+                        style="background-color: #64DD17;color: white;margin-bottom: 1rem">
+                  <md-icon>add_a_photo</md-icon>
+                </button>&nbsp;<span>Back-cover</span>
+                <input type="file" id="ipicinput2" placeholder="Picture" hidden>
+                <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
+              </div>
             </div>
-            <div fxFlex="">
-              <button md-fab (click)="picfile('ipicinput2')" style="background-color: #64DD17;color: white;margin-bottom: 1rem"><md-icon>add_a_photo</md-icon></button>&nbsp;<span>Back-cover</span>
-              <input type="file" id="ipicinput2" placeholder="Picture" hidden>
-              <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
+            <div fxLayoutAlign="center none">
+              <button type="submit" md-raised-button style="background-color: #FF6F00;color: white; margin:1rem"
+                      (click)="saveBook()">Save
+              </button>
             </div>
-          </div>
-          <div fxLayoutAlign="center none">
-            <button type="submit" md-raised-button style="background-color: #FF6F00;color: white; margin:1rem" (click)="saveBook()">Save</button>
-          </div>
 
-        </form>
-      </md-card>
-    </md-grid-tile>
-  </md-grid-list>
+          </form>
+        </md-card>
+      </md-grid-tile>
+    </md-grid-list>
 
 
-  <!--Card Prduct in home Search and show product -->
-<md-card *ngIf="!checkInsert">
-  <form>
-    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
+    <!--Card Prduct in home Search and show product -->
+    <md-card *ngIf="!checkInsert">
+      <form>
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
 
           <md-select placeholder="Catagory" fxFlex="20">
             <md-option value="food">
@@ -98,71 +113,91 @@
           <md-input-container fxFlex="30">
             <input mdInput placeholder="Search" value="">
           </md-input-container>
-        <button md-raised-button color="primary" type="submit"><md-icon>search</md-icon></button>
+          <button md-raised-button color="primary" type="submit">
+            <md-icon>search</md-icon>
+          </button>
 
-    </div>
-  </form>
-</md-card>
+        </div>
+      </form>
+    </md-card>
 
-  <md-grid-list cols="{{cols}}" rowHeight="1:2" *ngIf="!checkInsert">
+    <md-grid-list cols="{{cols}}" rowHeight="1:2" *ngIf="!checkInsert">
       <md-grid-tile>
-          <md-card class="procard">
-              <img md-card-image src="http://via.placeholder.com/150x180">
-              <md-card-content>
-                  <md-card-subtitle class="namebook">Name of book </md-card-subtitle>
-                  <md-card-subtitle class="ownprice">Own Price</md-card-subtitle>
-                  <md-card-title class="saleprice">Sale Price</md-card-title>
-              </md-card-content>
-              <button md-mini-fab class="viewbtn" (click)="bookDetail()"><md-icon>search</md-icon></button>
-          </md-card>
+        <md-card class="procard">
+          <img md-card-image src="http://via.placeholder.com/150x180">
+          <md-card-content>
+            <md-card-subtitle class="namebook">Name of book</md-card-subtitle>
+            <md-card-subtitle class="ownprice">Own Price</md-card-subtitle>
+            <md-card-title class="saleprice">Sale Price</md-card-title>
+          </md-card-content>
+          <button md-mini-fab class="viewbtn" (click)="bookDetail()">
+            <md-icon>search</md-icon>
+          </button>
+        </md-card>
       </md-grid-tile>
 
-  </md-grid-list>
+    </md-grid-list>
 
-</div>
+  </div>
   <div *ngIf="checkDetail">
     <!--Form Update Prduct-->
-    <md-grid-list cols="1" rowHeight="900px" *ngIf="checkUpdate">
+    <md-grid-list cols="1" rowHeight="1100px" *ngIf="checkUpdate">
       <md-grid-tile>
         <md-card class="insertcard">
+          <button md-button class="backhome" (click)="detailTohome()"><md-icon>back</md-icon></button>
           <h1 style="text-align: center">Update Book</h1>
           <br>
-          <form>
-            <md-select placeholder="Catagory">
-              <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
-              <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
-              <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
-              <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
+          <form novalidate [formGroup]="fUpdate">
 
+            <md-select formControlName="catagory" placeholder="Catagory">
+              <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
+              <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
+              <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
+              <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
             </md-select>
+
             <md-input-container>
-              <input mdInput type="text" placeholder="Book name" value="">
+              <input mdInput formControlName="bname" type="text" placeholder="Book name" value="">
             </md-input-container>
             <md-input-container>
-              <input mdInput type="text" placeholder="Own Price" value="">
+              <input mdInput formControlName="author" type="text" placeholder="Author" value="">
             </md-input-container>
             <md-input-container>
-              <input mdInput type="text" placeholder="Sale Price" value="">
+              <input mdInput formControlName="import_price" type="text" placeholder="Import Price" value="">
             </md-input-container>
             <md-input-container>
-              <textarea mdInput placeholder="Description"></textarea>
+              <input mdInput formControlName="export_price" type="text" placeholder="Sale Price" value="">
+            </md-input-container>
+            <md-input-container>
+              <input mdInput formControlName="quantity" type="number" placeholder="Quantity" value="">
+            </md-input-container>
+            <md-input-container>
+              <textarea mdInput formControlName="description" placeholder="Description"></textarea>
             </md-input-container>
 
 
-            <div fxLayout="row" fxLayoutAlign="center stretch" >
+            <div fxLayout="row" fxLayoutAlign="center stretch">
               <div fxFlex="">
-                <button md-fab (click)="picfile('upicinput1')" style="background-color: #00E5FF;color: white;margin-bottom: 1rem"><md-icon>add_a_photo</md-icon></button>&nbsp;<span>Font-cover</span>
+                <button md-fab (click)="picfile('upicinput1')"
+                        style="background-color: #00E5FF;color: white;margin-bottom: 1rem">
+                  <md-icon>add_a_photo</md-icon>
+                </button>&nbsp;<span>Font-cover</span>
                 <input type="file" id="upicinput1" placeholder="Picture" hidden>
                 <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
               </div>
               <div fxFlex="">
-                <button md-fab (click)="picfile('upicinput2')" style="background-color: #64DD17;color: white;margin-bottom: 1rem"><md-icon>add_a_photo</md-icon></button>&nbsp;<span>Back-cover</span>
+                <button md-fab (click)="picfile('upicinput2')"
+                        style="background-color: #64DD17;color: white;margin-bottom: 1rem">
+                  <md-icon>add_a_photo</md-icon>
+                </button>&nbsp;<span>Back-cover</span>
                 <input type="file" id="upicinput2" placeholder="Picture" hidden>
                 <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
               </div>
             </div>
             <div fxLayoutAlign="center none">
-              <button type="submit" md-raised-button style="background-color: #FF6F00;color: white; margin:1rem" (click)="updateBook()">Save</button>
+              <button type="submit" md-raised-button style="background-color: #FF6F00;color: white; margin:1rem"
+                      (click)="updateBook()">Save
+              </button>
             </div>
 
           </form>
@@ -171,33 +206,39 @@
     </md-grid-list>
 
     <div fxLayoutAlign="center stretch" style="margin: 1rem" *ngIf="!checkUpdate">
-
       <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="center center">
-          <div fxFlex="">
-            <img style="width: 250px" src="http://via.placeholder.com/150x180" alt="">
-            <div style="margin: 1rem">
-              <button md-raised-button style="background-color:#E65100;color: white" (click)="update()"><md-icon>settings</md-icon>Update</button>
-              <button md-raised-button style="background-color:#D50000;color: white" (click)="deleteBook()"><md-icon>delete_forever</md-icon>Delete</button>
-            </div>
+        <button md-button class="backhome" (click)="detailTohome()"><md-icon>back</md-icon></button>
+        <div fxFlex="">
+          <img style="width: 250px" src="http://via.placeholder.com/150x180" alt="">
+          <div style="margin: 1rem">
+            <button md-raised-button style="background-color:#E65100;color: white" (click)="update()">
+              <md-icon>settings</md-icon>
+              Update
+            </button>
+            <button md-raised-button style="background-color:#D50000;color: white" (click)="deleteBook()">
+              <md-icon>delete_forever</md-icon>
+              Delete
+            </button>
           </div>
-          <div fxFlex="" fxLayout="column" style="">
-            <h1>Book Detail</h1>
-            <h3>Name of book</h3>
-            <h4>Catagory</h4>
-            <h3>Own Price 000000</h3>
-            <h2>Sale Price 111111</h2>
-            <h1>Description</h1>
-            <p>ksdfjlsdf
-                sdkfjsldkfjsd
-                sdkfjsdlkfj
-                sdkfjsdlkfj
-                sdkfjsdklfj
-                sdlfjskdlfdsbr
+        </div>
+        <div fxFlex="" fxLayout="column" style="">
+          <h1>Book Detail</h1>
+          <h3>Name of book</h3>
+          <h4>Catagory</h4>
+          <h3>Own Price 000000</h3>
+          <h2>Sale Price 111111</h2>
+          <h1>Description</h1>
+          <p>ksdfjlsdf
+            sdkfjsldkfjsd
+            sdkfjsdlkfj
+            sdkfjsdlkfj
+            sdkfjsdklfj
+            sdlfjskdlfdsbr
             sdfjslkdfjskdjflksdjf
             dsfjskdlfjlksdjf
             ksdfjlksdjflksdjf
             skdlfjksdjfskdjflsj</p>
-          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -205,5 +246,7 @@
 
 <div *ngIf="!checkDetail">
   <!--Insert Button-->
-  <button class="addpro" md-fab *ngIf="!checkInsert" (click)="addBooks()"><md-icon>add</md-icon></button>
+  <button class="addpro" md-fab *ngIf="!checkInsert" (click)="addBooks()">
+    <md-icon>add</md-icon>
+  </button>
 </div>

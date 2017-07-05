@@ -19,20 +19,24 @@ export class ManagementService {
 
   saveBook(_data) {
     const data = _data;
-    return this.db.push(data).then(() => {
-      return true;
-    }).catch(() => {
-      return false;
+    return this.db.push(data).then((success) => {
+      console.log(success);
+      return success;
+    }).catch((error) => {
+      console.log(error)
+      return error;
     });
   }
 
-  updateBook(_key , _data) {
+  updateBook(_key, _data) {
     const data = _data;
     const key = _key;
-    return this.db.update(key, data).then(() => {
-      return true;
-    }).catch(() => {
-      return false;
+    return this.db.update(key, data).then((success) => {
+      console.log(success);
+      return success;
+    }).catch((error) => {
+      console.log(error)
+      return error;
     });
   }
 
