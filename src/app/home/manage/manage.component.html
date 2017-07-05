@@ -1,0 +1,50 @@
+
+  <!--Form Update Prduct-->
+  <md-grid-list cols="1" rowHeight="900px">
+    <!--<app-manage [data]="currentBook" [checkInsert]="checkInsert" [title]="" (success)="magnageSuccess($event)" *ngIf="checkInsert"></app-manage>-->
+      <md-grid-tile>
+      <md-card class="insertcard">
+        <h1 style="text-align: center">Update Book</h1>
+        <br>
+        <form>
+          <md-select placeholder="Catagory">
+            <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
+            <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
+            <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
+            <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
+
+          </md-select>
+          <md-input-container>
+            <input mdInput type="text" placeholder="Book name" value="">
+          </md-input-container>
+          <md-input-container>
+            <input mdInput type="text" placeholder="Own Price" value="">
+          </md-input-container>
+          <md-input-container>
+            <input mdInput type="text" placeholder="Sale Price" value="">
+          </md-input-container>
+          <md-input-container>
+            <textarea mdInput placeholder="Description"></textarea>
+          </md-input-container>
+
+
+          <div fxLayout="row" fxLayoutAlign="center stretch" >
+            <div fxFlex="">
+              <button md-fab (click)="picfile('picinput1')" style="background-color: #00E5FF;color: white;margin-bottom: 1rem"><md-icon>add_a_photo</md-icon></button>&nbsp;<span>Font-cover</span>
+              <input type="file" id="picinput1" placeholder="Picture" hidden>
+              <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
+            </div>
+            <div fxFlex="">
+              <button md-fab (click)="picfile('picinput2')" style="background-color: #64DD17;color: white;margin-bottom: 1rem"><md-icon>add_a_photo</md-icon></button>&nbsp;<span>Back-cover</span>
+              <input type="file" id="picinput2" placeholder="Picture" hidden>
+              <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
+            </div>
+          </div>
+          <div fxLayoutAlign="center none">
+            <button type="submit" md-raised-button style="background-color: #FF6F00;color: white; margin:1rem" (click)="updateBook()">Save</button>
+          </div>
+
+        </form>
+      </md-card>
+    </md-grid-tile>
+  </md-grid-list>

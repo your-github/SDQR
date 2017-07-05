@@ -40,6 +40,7 @@ import {appRoutes} from './app.router';
 
 /*** Gallery*/
 import {GalleryConfig, GalleryModule} from 'ng-gallery';
+import { ManageComponent } from './home/manage/manage.component';
 
 export const galleryConfig: GalleryConfig = {
   // ...
@@ -59,7 +60,8 @@ export const firebaseConfig = {
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    ManageComponent
   ],
   imports: [
     BrowserModule,
