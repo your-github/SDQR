@@ -20,7 +20,6 @@ export class ManagementService {
   saveBook(_data) {
     const data = _data;
     return this.db.push(data).then((success) => {
-      console.log(success);
       return success;
     }).catch((error) => {
       console.log(error)
@@ -32,7 +31,6 @@ export class ManagementService {
     const data = _data;
     const key = _key;
     return this.db.update(key, data).then((success) => {
-      console.log(success);
       return success;
     }).catch((error) => {
       console.log(error)

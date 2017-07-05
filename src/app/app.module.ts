@@ -34,6 +34,7 @@ import {LoginComponent} from './login/login.component';
 /*** Component*/
 import {RegisterComponent} from './register/register.component';
 import {HomeComponent} from './home/home.component';
+import {UserService} from './service/user.service';
 /*** Router*/
 
 import {appRoutes} from './app.router';
@@ -54,7 +55,6 @@ export const firebaseConfig = {
   storageBucket: 'dbook-8d9fa.appspot.com',
   messagingSenderId: '951635947188'
 };
-
 
 
 @NgModule({
@@ -93,7 +93,7 @@ export const firebaseConfig = {
     GalleryModule.forRoot(galleryConfig)
 
   ],
-  providers: [edSecure, LoginSecureService, ShareSecureService],
+  providers: [edSecure, LoginSecureService, ShareSecureService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

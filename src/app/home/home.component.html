@@ -24,7 +24,7 @@
       <md-icon>person_add</md-icon>
       Register
     </a>
-    <a md-button class="asbtn" (click)="sidenav.close()">
+    <a md-button class="asbtn" (click)="logout()">
       <md-icon>exit_to_app</md-icon>
       Logout
     </a>
@@ -35,11 +35,13 @@
     <md-grid-list cols="1" rowHeight="1100px" *ngIf="checkInsert">
       <md-grid-tile>
         <md-card class="insertcard">
-          <button md-button class="backhome" (click)="insertTohome()"><md-icon>back</md-icon></button>
+          <button md-button class="backhome" (click)="insertTohome()">
+            <md-icon>back</md-icon>
+          </button>
           <h1 style="text-align: center">Insert Book</h1>
           <br>
           <form novalidate [formGroup]="fInsert">
-            <md-select formControlName="catagory" placeholder="Catagory">
+            <md-select formControlName="category" placeholder="Category">
               <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
               <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
               <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
@@ -53,13 +55,13 @@
               <input mdInput formControlName="author" type="text" placeholder="Author" value="">
             </md-input-container>
             <md-input-container>
-              <input mdInput formControlName="import_price" type="text" placeholder="Import Price" value="">
+              <input mdInput formControlName="import_price" type="number" min="1" placeholder="Import Price" value="">
             </md-input-container>
             <md-input-container>
-              <input mdInput formControlName="export_price" type="text" placeholder="Sale Price" value="">
+              <input mdInput formControlName="export_price" type="number" min="1" placeholder="Sale Price" value="">
             </md-input-container>
             <md-input-container>
-              <input mdInput formControlName="quantity" type="number" placeholder="Quantity" value="">
+              <input mdInput formControlName="quantity" type="number" min="0" placeholder="Quantity" value="">
             </md-input-container>
             <md-input-container>
               <textarea mdInput formControlName="description" placeholder="Description"></textarea>
@@ -72,7 +74,7 @@
                         style="background-color: #00E5FF;color: white;margin-bottom: 1rem">
                   <md-icon>add_a_photo</md-icon>
                 </button>&nbsp;<span>Font-cover</span>
-                <input type="file" id="ipicinput1" placeholder="Picture" hidden>
+                <input type="file" id="ipicinput1" placeholder="Picture" (change)="frontPicture($event)" hidden>
                 <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
               </div>
               <div fxFlex="">
@@ -80,7 +82,7 @@
                         style="background-color: #64DD17;color: white;margin-bottom: 1rem">
                   <md-icon>add_a_photo</md-icon>
                 </button>&nbsp;<span>Back-cover</span>
-                <input type="file" id="ipicinput2" placeholder="Picture" hidden>
+                <input type="file" id="ipicinput2" placeholder="Picture" (change)="backPicture($event)" hidden>
                 <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
               </div>
             </div>
@@ -101,7 +103,7 @@
       <form>
         <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
 
-          <md-select placeholder="Catagory" fxFlex="20">
+          <md-select placeholder="Category" fxFlex="20">
             <md-option value="food">
               ນິຍາຍ
             </md-option>
@@ -122,16 +124,16 @@
     </md-card>
 
     <md-grid-list cols="{{cols}}" rowHeight="1:2" *ngIf="!checkInsert">
-      <md-grid-tile>
+      <md-grid-tile *ngFor="let book of books">
         <md-card class="procard">
           <img md-card-image src="http://via.placeholder.com/150x180">
           <md-card-content>
-            <md-card-subtitle class="namebook">Name of book</md-card-subtitle>
-            <md-card-subtitle class="ownprice">Own Price</md-card-subtitle>
-            <md-card-title class="saleprice">Sale Price</md-card-title>
+            <md-card-subtitle class="namebook">{{book.bname}}</md-card-subtitle>
+            <md-card-subtitle class="ownprice">{{book.import_price}}</md-card-subtitle>
+            <md-card-title class="saleprice">{{book.export_price}}</md-card-title>
           </md-card-content>
-          <button md-mini-fab class="viewbtn" (click)="bookDetail()">
-            <md-icon>search</md-icon>
+          <button md-mini-fab class="viewbtn" (click)="bookDetail(book.$key, book )">
+            <md-icon>details</md-icon>
           </button>
         </md-card>
       </md-grid-tile>
@@ -144,12 +146,14 @@
     <md-grid-list cols="1" rowHeight="1100px" *ngIf="checkUpdate">
       <md-grid-tile>
         <md-card class="insertcard">
-          <button md-button class="backhome" (click)="detailTohome()"><md-icon>back</md-icon></button>
+          <button md-button class="backhome" (click)="detailTohome()">
+            <md-icon>back</md-icon>
+          </button>
           <h1 style="text-align: center">Update Book</h1>
           <br>
           <form novalidate [formGroup]="fUpdate">
 
-            <md-select formControlName="catagory" placeholder="Catagory">
+            <md-select formControlName="category" placeholder="Catagory">
               <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
               <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
               <md-option value="ນິຍາຍ">ນິຍາຍ</md-option>
@@ -157,22 +161,22 @@
             </md-select>
 
             <md-input-container>
-              <input mdInput formControlName="bname" type="text" placeholder="Book name" value="">
+              <input mdInput formControlName="bname" type="text" placeholder="Book name" value="{{bDetail['bd']['bname']}}">
             </md-input-container>
             <md-input-container>
-              <input mdInput formControlName="author" type="text" placeholder="Author" value="">
+              <input mdInput formControlName="author" type="text" placeholder="Author" value="{{bDetail['bd']['author']}}">
             </md-input-container>
             <md-input-container>
-              <input mdInput formControlName="import_price" type="text" placeholder="Import Price" value="">
+              <input mdInput formControlName="import_price" type="number" min="1" placeholder="Import Price" value="{{bDetail['bd']['import_price']}}">
             </md-input-container>
             <md-input-container>
-              <input mdInput formControlName="export_price" type="text" placeholder="Sale Price" value="">
+              <input mdInput formControlName="export_price" type="number" min="1" placeholder="Sale Price" value="{{bDetail['bd']['export_price']}}">
             </md-input-container>
             <md-input-container>
-              <input mdInput formControlName="quantity" type="number" placeholder="Quantity" value="">
+              <input mdInput formControlName="quantity" type="number" min="0" placeholder="Quantity" value="{{bDetail['bd']['quantity']}}">
             </md-input-container>
             <md-input-container>
-              <textarea mdInput formControlName="description" placeholder="Description"></textarea>
+              <textarea mdInput formControlName="description" placeholder="Description">{{bDetail['bd']['description']}}</textarea>
             </md-input-container>
 
 
@@ -207,7 +211,9 @@
 
     <div fxLayoutAlign="center stretch" style="margin: 1rem" *ngIf="!checkUpdate">
       <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="center center">
-        <button md-button class="backhome" (click)="detailTohome()"><md-icon>back</md-icon></button>
+        <button md-button class="backhome" (click)="detailTohome()">
+          <md-icon>back</md-icon>
+        </button>
         <div fxFlex="">
           <img style="width: 250px" src="http://via.placeholder.com/150x180" alt="">
           <div style="margin: 1rem">
@@ -223,21 +229,12 @@
         </div>
         <div fxFlex="" fxLayout="column" style="">
           <h1>Book Detail</h1>
-          <h3>Name of book</h3>
-          <h4>Catagory</h4>
-          <h3>Own Price 000000</h3>
-          <h2>Sale Price 111111</h2>
-          <h1>Description</h1>
-          <p>ksdfjlsdf
-            sdkfjsldkfjsd
-            sdkfjsdlkfj
-            sdkfjsdlkfj
-            sdkfjsdklfj
-            sdlfjskdlfdsbr
-            sdfjslkdfjskdjflksdjf
-            dsfjskdlfjlksdjf
-            ksdfjlksdjflksdjf
-            skdlfjksdjfskdjflsj</p>
+          <h3><strong>Name:</strong> {{bDetail['bd']['bname']}}</h3>
+          <h4><strong>Category:</strong> {{bDetail['bd']['category']}}</h4>
+          <h3><strong>Import:</strong> {{bDetail['bd']['import_price']}}</h3>
+          <h2><strong>Sale:</strong> {{bDetail['bd']['export_price']}}</h2>
+          <h1><strong>Description</strong></h1>
+          <p>{{bDetail['bd']['description']}}</p>
         </div>
       </div>
     </div>
