@@ -82,7 +82,7 @@
                         style="background-color: #64DD17;color: white;margin-bottom: 1rem">
                   <md-icon>add_a_photo</md-icon>
                 </button>&nbsp;<span>Back-cover</span>
-                <input type="file" id="ipicinput2" placeholder="Picture" (change)="backPicture($event)" hidden>
+                <input type="file" id="ipicinput2"  placeholder="Picture" (change)="backPicture($event)" hidden>
                 <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
               </div>
             </div>
@@ -147,7 +147,7 @@
       <md-grid-tile>
         <md-card class="insertcard">
           <button md-button class="backhome" (click)="detailTohome()">
-            <md-icon>back</md-icon>
+            <md-icon>backspace</md-icon>
           </button>
           <h1 style="text-align: center">Update Book</h1>
           <br>
@@ -212,7 +212,7 @@
     <div fxLayoutAlign="center stretch" style="margin: 1rem" *ngIf="!checkUpdate">
       <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="center center">
         <button md-button class="backhome" (click)="detailTohome()">
-          <md-icon>back</md-icon>
+          <md-icon>backspace</md-icon>
         </button>
         <div fxFlex="">
           <img style="width: 250px" src="http://via.placeholder.com/150x180" alt="">

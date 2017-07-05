@@ -6,6 +6,7 @@ import {FirebaseListObservable} from 'angularfire2/database';
 
 import {Router} from '@angular/router';
 import {UserService} from '../service/user.service'
+import {log} from "util";
 
 
 @Component({
@@ -29,8 +30,8 @@ export class HomeComponent implements OnInit {
   fUpdate: FormGroup;
 
   /** image property */
-  frontpic: any;
-  backpic: any;
+  frontpic: File;
+  backpic: File;
 
   /** books object */
   books: FirebaseListObservable<any>;
@@ -81,8 +82,6 @@ export class HomeComponent implements OnInit {
     }, error => {
       console.log(error);
     });
-
-    console.log('Oninnit Event')
   }
 
   homeEvt(sidenav) {
@@ -96,13 +95,25 @@ export class HomeComponent implements OnInit {
   }
 
   frontPicture(event) {
-    this.frontpic = event.target.file[0];
-    console.log('Front ' + this.frontpic.filename)
+    const file = event.target.files.item(0);
+    console.log(file);
+    let name = file.name;
+    const nameArr = name.split('.');
+    name = 'front.' + nameArr[nameArr.length - 1]
+    console.log(name);
+    file.name = name;
+    this.frontpic = file;
+    console.log(this.frontpic);
   }
 
   backPicture(event) {
-    this.backpic = event.target.file[0];
-    console.log('Back ' + this.backpic.filename)
+    const file = event.target.files.item(0);
+    console.log(file);
+    const name = file.name;
+    const nameArr = name.split('.');
+    console.log(nameArr);
+    this.backpic = file;
+    console.log(this.backpic);
   }
 
   detailTohome() {
