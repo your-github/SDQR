@@ -40,7 +40,7 @@ import {appRoutes} from './app.router';
 
 /*** Gallery*/
 import {GalleryConfig, GalleryModule} from 'ng-gallery';
-import { ManageComponent } from './home/manage/manage.component';
+import {ManageComponent} from './home/manage/manage.component';
 
 export const galleryConfig: GalleryConfig = {
   // ...
@@ -49,11 +49,13 @@ export const galleryConfig: GalleryConfig = {
 export const firebaseConfig = {
   apiKey: 'AIzaSyDKfhalS9iXAH1Lqr_Z7HcoYF0mHHmHfd0',
   authDomain: 'dbook-8d9fa.firebaseapp.com',
-  databaseURL: 'https://dbook-8d9fa.firebaseapp.com',
+  databaseURL: 'https://dbook-8d9fa.firebaseio.com',
   projectId: 'dbook-8d9fa',
   storageBucket: 'dbook-8d9fa.appspot.com',
   messagingSenderId: '951635947188'
 };
+
+
 
 @NgModule({
   declarations: [
