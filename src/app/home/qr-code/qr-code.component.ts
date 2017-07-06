@@ -1,19 +1,47 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
+import {edSecure} from '../../service/encryption/secure';
 
 @Component({
   selector: 'app-qr-code',
   template: `
     <div>
-      <!--<qr-code [value]= 'qrcode' [size]="250"></qr-code>-->
+      <!--<qr-code [value]= 'qrdata' [size]="250"></qr-code>-->
     </div>
   `,
   styles: []
 })
 export class QrCodeComponent implements OnInit {
 
-  constructor() { }
+  @Input() book: {
+    key: string,
+    bd: {
+      author: string,
+      bname: string,
+      bpic: string,
+      category: string,
+      description: string,
+      export_price: string,
+      fpic: string,
+      import_price: string,
+      quantity: string
+    }
+  };
+
+  qrdata: string;
+
+  constructor(private protect: edSecure) {
+  }
 
   ngOnInit() {
+    const bookdt = this.book;
+    this.qrdata = `
+    {
+      id: ${bookdt.key},
+      name: ${bookdt.bd.bname},
+      ip: ${this.protect.encrytionNumber(bookdt.bd.export_price)},
+      price: ${bookdt.bd.export_price}
+    }
+    `;
   }
 
 }

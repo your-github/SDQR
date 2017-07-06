@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
+import {UserService} from '../service/user.service';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -7,7 +10,25 @@ import {Router} from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private router: Router) {
+  fRegister: FormGroup;
+
+  userpic64: any;
+
+  pass: string;
+  confirm: string;
+
+  constructor(private router: Router, private formBuild: FormBuilder, private userService: UserService) {
+    this.fRegister = formBuild.group({
+      fname: ['', Validators.required],
+      lname: ['', Validators.required],
+      email: [
+        '',
+        Validators.required,
+        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')
+      ],
+      password: ['', Validators.required],
+      confirm: ['', [Validators.required]]
+    })
   }
 
   ngOnInit() {
@@ -19,5 +40,22 @@ export class RegisterComponent implements OnInit {
 
   goHome() {
     this.router.navigate(['home']);
+  }
+
+  userPicture(event) {
+    const file = event.target.files.item(0);
+    const base64 = new FileReader();
+    base64.onload = () => {
+      this.userpic64 = base64.result;
+    }
+    base64.readAsDataURL(file);
+  }
+
+  register() {
+    this.userService.register(this.fRegister.value).then(success => {
+      console.log(success);
+    }).catch(error => {
+      console.log(error);
+    })
   }
 }

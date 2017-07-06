@@ -2,30 +2,31 @@
   <md-icon style="margin-right: auto;cursor: pointer" (click)="goHome()">backspace</md-icon>
   <span style="margin-right: auto;">SDQR</span>
 </md-toolbar>
-<form>
+<form novalidate [formGroup] = "fRegister" (submit)="register()">
   <div fxLayoutAlign="center center">
     <md-card fxLayout="column" class="regiscard">
       <h1>Register Form</h1>
       <md-input-container>
-        <input mdInput type="text" placeholder="First name">
+        <input mdInput type="text" formControlName="fname" placeholder="First name">
       </md-input-container>
       <md-input-container>
-        <input mdInput type="text" placeholder="Last name">
+        <input mdInput type="text" formControlName="lname" placeholder="Last name">
       </md-input-container>
       <md-input-container>
-        <input mdInput type="email" placeholder="Email">
+        <input mdInput type="email" formControlName="email" placeholder="Email">
       </md-input-container>
       <md-input-container>
-        <input mdInput type="password" placeholder="Password">
+        <input mdInput type="password" formControlName="password" [(ngModel)]="pass" placeholder="Password">
       </md-input-container>
       <md-input-container>
-        <input mdInput type="password" placeholder="Re-Password">
+        <input mdInput type="password" formControlName="confirm" id="confirm" [(ngModel)]="confirm" placeholder="Confirm password">
+        <p class="ng-invalid">Password is not matched</p>
       </md-input-container>
       <button md-fab (click)="propic()" style="background-color: #18FFFF;color: white;margin-bottom: 1rem">
         <md-icon>add_a_photo</md-icon>
       </button>
-      <input type="file" id="propic" placeholder="Picture" hidden>
-      <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
+      <input type="file" id="propic" placeholder="Picture" (change)="userPicture($event)" hidden>
+      <img style="width: 200px" *ngIf="userpic64" [src]="userpic64" alt="">
       <button type="submit" md-raised-button style="background-color: #76FF03;color: white;margin-top: 1rem">
         Register
       </button>

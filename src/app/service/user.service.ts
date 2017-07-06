@@ -19,6 +19,10 @@ export class UserService {
     this.user = Auth.authState;
   }
 
+  getUser() {
+    return this.db;
+  }
+
   register(data: any) {
     /** Get data from view and prepare to store on users document */
     const userData = {email: data.email, fname: data.fname, lname: data.lname, picture: data.picname};
@@ -28,15 +32,19 @@ export class UserService {
 
     return this.Auth.auth.createUserWithEmailAndPassword(email, password)
       .then((success) => {
-      console.log(success);
-      const registertoken = success.uid + success.m;
-      const userdb = this.firebasedb.list('/dbook/users/' + registertoken);
-      userdb.push(userData);
-      return true;
-    }).catch((err) => {
-      console.log(err);
-      return false;
-    });
+        console.log(success);
+        const registertoken = success.uid + success.m;
+        const userdb = this.firebasedb.list('/dbook/users/' + registertoken);
+        userdb.push(userData).then(succ => {
+          return true;
+        }).catch(err => {
+          console.log(err);
+          return false;
+        });
+      }).catch((error) => {
+        console.log(error);
+        return false;
+      });
   }
 
   login(user: any) {
