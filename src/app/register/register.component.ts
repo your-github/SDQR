@@ -59,11 +59,11 @@ export class RegisterComponent implements OnInit {
       const user = this.fRegister.value;
       user.pic = this.userpic64;
       console.log(user);
+      this.userService.register(user).then(success => {
+       console.log(success);
+       }).catch(error => {
+       console.log(error);
+       });
     }
-    /*this.userService.register(user).then(success => {
-     console.log(success);
-     }).catch(error => {
-     console.log(error);
-     });*/
   }
 }
