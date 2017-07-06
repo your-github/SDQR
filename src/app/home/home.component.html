@@ -231,41 +231,42 @@
       <button md-fab class="backhome" (click)="detailTohome()">
         <md-icon>backspace</md-icon>
       </button>
-<!--      <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="center center">
-        <div fxFlex="">
+      <!--      <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="center center">
+              <div fxFlex="">
 
-          <div style="margin-right: 2rem">
-            <img style="width: 250px;height: 350px" *ngIf="bimages[0].src" [src]="bimages[0].src" (click)="gallery.set(0)"/>
-            <div>
-              <img src="http://via.placeholder.com/200x200" alt="">
-            </div>
-          </div>
+                <div style="margin-right: 2rem">
+                  <img style="width: 250px;height: 350px" *ngIf="bimages[0].src" [src]="bimages[0].src" (click)="gallery.set(0)"/>
+                  <div>
+                    <img src="http://via.placeholder.com/200x200" alt="">
+                  </div>
+                </div>
 
-          <div style="margin: 1rem">
-            <button md-raised-button style="background-color:#E65100;color: white" (click)="update()">
-              <md-icon>settings</md-icon>
-              Update
-            </button>
-            <button md-raised-button style="background-color:#D50000;color: white" (click)="deleteBook()">
-              <md-icon>delete_forever</md-icon>
-              Delete
-            </button>
-          </div>
-        </div>
-        <div fxFlex="" fxLayout="column" style="">
-          <h1>Book Detail</h1>
-          <h3><strong>Name:</strong> {{bDetail['bd']['bname']}}</h3>
-          <h4><strong>Category:</strong> {{bDetail['bd']['category']}}</h4>
-          <h3><strong>Import:</strong> {{bDetail['bd']['import_price']}}<span> ₭</span></h3>
-          <h2><strong>Sale:</strong> {{bDetail['bd']['export_price']}}<span> ₭</span></h2>
-          <h1><strong>Description</strong></h1>
-          <p>{{bDetail['bd']['description']}}</p>
-        </div>
-      </div>-->
+                <div style="margin: 1rem">
+                  <button md-raised-button style="background-color:#E65100;color: white" (click)="update()">
+                    <md-icon>settings</md-icon>
+                    Update
+                  </button>
+                  <button md-raised-button style="background-color:#D50000;color: white" (click)="deleteBook()">
+                    <md-icon>delete_forever</md-icon>
+                    Delete
+                  </button>
+                </div>
+              </div>
+              <div fxFlex="" fxLayout="column" style="">
+                <h1>Book Detail</h1>
+                <h3><strong>Name:</strong> {{bDetail['bd']['bname']}}</h3>
+                <h4><strong>Category:</strong> {{bDetail['bd']['category']}}</h4>
+                <h3><strong>Import:</strong> {{bDetail['bd']['import_price']}}<span> ₭</span></h3>
+                <h2><strong>Sale:</strong> {{bDetail['bd']['export_price']}}<span> ₭</span></h2>
+                <h1><strong>Description</strong></h1>
+                <p>{{bDetail['bd']['description']}}</p>
+              </div>
+            </div>-->
       <md-tab-group>
         <md-tab label="Product Picture">
           <div fxLayoutAlign="center center" fxLayout="column">
-            <img style="width: 250px;height: 350px" *ngIf="bimages[0].src" [src]="bimages[0].src" (click)="gallery.set(0)"/>
+            <img style="width: 250px;height: 350px" *ngIf="bimages[0].src" [src]="bimages[0].src"
+                 (click)="gallery.set(0)"/>
 
             <div style="margin: 1rem">
               <button md-raised-button style="background-color:#E65100;color: white" (click)="update()">
@@ -292,7 +293,8 @@
         </md-tab>
         <md-tab label="QR-Code">
           <div fxLayoutAlign="center center">
-            <img style="width: 300px" src="http://via.placeholder.com/350x150" alt="">
+
+            <app-qr-code [book]='bDetail' ></app-qr-code>
           </div>
         </md-tab>
 

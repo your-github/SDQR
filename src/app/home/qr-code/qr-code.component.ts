@@ -5,7 +5,7 @@ import {edSecure} from '../../service/encryption/secure';
   selector: 'app-qr-code',
   template: `
     <div>
-      <!--<qr-code [value]= 'qrdata' [size]="250"></qr-code>-->
+      <qr-code [value]='qrdata' [size]="250"></qr-code>
     </div>
   `,
   styles: []
@@ -36,12 +36,13 @@ export class QrCodeComponent implements OnInit {
     const bookdt = this.book;
     this.qrdata = `
     {
-      id: ${bookdt.key},
+      id: ${this.protect.encrytionUser(bookdt.key)},
       name: ${bookdt.bd.bname},
-      ip: ${this.protect.encrytionNumber(bookdt.bd.export_price)},
+      ip: ${this.protect.encrytionNumber(bookdt.bd.import_price)},
       price: ${bookdt.bd.export_price}
     }
     `;
   }
+
 
 }

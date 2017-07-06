@@ -44,6 +44,8 @@ import {appRoutes} from './app.router';
 /*** Gallery*/
 import {GalleryConfig, GalleryModule} from 'ng-gallery';
 
+/*** Qrcode*/
+import { QRCodeModule } from 'angular2-qrcode';
 
 
 export const galleryConfig: GalleryConfig = {
@@ -126,7 +128,8 @@ export const firebaseConfig = {
     PushNotificationsModule,
     SimpleNotificationsModule.forRoot(),
     appRoutes,
-    GalleryModule.forRoot(galleryConfig)
+    GalleryModule.forRoot(galleryConfig),
+    QRCodeModule
 
   ],
   providers: [edSecure, LoginSecureService, ShareSecureService, UserService],
