@@ -73,15 +73,6 @@ export class HomeComponent implements OnInit {
       description: ['', Validators.required]
     });
 
-    this.fUpdate = formBuilder.group({
-      category: ['', Validators.required],
-      author: ['', Validators.required],
-      bname: ['', Validators.required],
-      import_price: ['', Validators.required],
-      export_price: ['', Validators.required],
-      quantity: ['', Validators.required],
-      description: ['', Validators.required]
-    });
 
   }
 
@@ -191,6 +182,15 @@ export class HomeComponent implements OnInit {
   }
 
   update() {
+    this.fUpdate = this.formBuilder.group({
+      category: [this.bDetail.bd.category, Validators.required],
+      author: [this.bDetail.bd.author, Validators.required],
+      bname: [this.bDetail.bd.bname, Validators.required],
+      import_price: [this.bDetail.bd.import_price, Validators.required],
+      export_price: [this.bDetail.bd.export_price, Validators.required],
+      quantity: [this.bDetail.bd.quantity, Validators.required],
+      description: [this.bDetail.bd.description, Validators.required]
+    });
     this.checkUpdate = true;
   }
 
