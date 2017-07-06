@@ -193,10 +193,10 @@
 
             <div fxLayout="row" fxLayoutAlign="center stretch">
               <div fxFlex="">
-                <button md-fab (click)="picfile('upicinput1')"
+                <a md-fab (click)="picfile('upicinput1')"
                         style="background-color: #00E5FF;color: white;margin-bottom: 1rem">
                   <md-icon>add_a_photo</md-icon>
-                </button>&nbsp;<span>Font-cover</span>
+                </a>&nbsp;<span>Font-cover</span>
                 <input type="file" id="upicinput1" placeholder="Picture" (change)="frontPicture($event)" hidden>
                 <div *ngIf="!frontpic64">
                   <img style="width: 200px" *ngIf="bDetail.bd.fpic" [src]="bDetail.bd.fpic" alt="">
@@ -204,10 +204,10 @@
                 <img style="width: 200px" *ngIf="frontpic64" [src]="frontpic64" alt="">
               </div>
               <div fxFlex="">
-                <button md-fab (click)="picfile('upicinput2')"
+                <a md-fab (click)="picfile('upicinput2')"
                         style="background-color: #69F0AE;color: white;margin-bottom: 1rem">
                   <md-icon>add_a_photo</md-icon>
-                </button>&nbsp;<span>Back-cover</span>
+                </a>&nbsp;<span>Back-cover</span>
                 <input type="file" id="upicinput2" placeholder="Picture" (change)="backPicture($event)" hidden>
                 <div *ngIf="!backpic64">
                   <img style="width: 200px" *ngIf="bDetail.bd.bpic" [src]="bDetail.bd.bpic" alt="">
