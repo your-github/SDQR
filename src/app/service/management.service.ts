@@ -20,10 +20,10 @@ export class ManagementService {
   saveBook(_data) {
     const data = _data;
     return this.db.push(data).then((success) => {
-      return success;
+      return true;
     }).catch((error) => {
       console.log(error)
-      return error;
+      return false;
     });
   }
 
@@ -31,10 +31,10 @@ export class ManagementService {
     const data = _data;
     const key = _key;
     return this.db.update(key, data).then((success) => {
-      return success;
+      return true;
     }).catch((error) => {
       console.log(error)
-      return error;
+      return false;
     });
   }
 

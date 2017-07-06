@@ -3,10 +3,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NotificationsService} from 'angular2-notifications';
 import {ManagementService} from '../service/management.service'
 import {FirebaseListObservable} from 'angularfire2/database';
-
 import {Router} from '@angular/router';
 import {UserService} from '../service/user.service'
-import {log} from "util";
 
 
 @Component({
@@ -30,12 +28,25 @@ export class HomeComponent implements OnInit {
   fUpdate: FormGroup;
 
   /** image property */
-  frontpic: File;
-  backpic: File;
+  frontpic64: any;
+  backpic64: any;
 
   /** books object */
   books: FirebaseListObservable<any>;
-  bDetail: { key: string, bd: Object };
+  bDetail: {
+    key: string,
+    bd: {
+      author: string,
+      bname: string,
+      bpic: string,
+      category: string,
+      description: string,
+      export_price: string,
+      fpic: string,
+      import_price: string,
+      quantity: string
+    }
+  };
 
   toastOpton = {
     timeOut: 3000,
@@ -96,24 +107,22 @@ export class HomeComponent implements OnInit {
 
   frontPicture(event) {
     const file = event.target.files.item(0);
-    console.log(file);
-    let name = file.name;
-    const nameArr = name.split('.');
-    name = 'front.' + nameArr[nameArr.length - 1]
-    console.log(name);
-    file.name = name;
-    this.frontpic = file;
-    console.log(this.frontpic);
+    const base64 = new FileReader();
+    base64.onload = () => {
+      this.frontpic64 = base64.result;
+      console.log(this.frontpic64);
+    }
+    base64.readAsDataURL(file);
   }
 
   backPicture(event) {
     const file = event.target.files.item(0);
-    console.log(file);
-    const name = file.name;
-    const nameArr = name.split('.');
-    console.log(nameArr);
-    this.backpic = file;
-    console.log(this.backpic);
+    const base64 = new FileReader();
+    base64.onload = () => {
+      this.backpic64 = base64.result;
+      console.log(this.backpic64);
+    }
+    base64.readAsDataURL(file);
   }
 
   detailTohome() {
@@ -152,11 +161,19 @@ export class HomeComponent implements OnInit {
 
   saveBook() {
     if (this.fInsert.valid) {
-      this.manageService.saveBook(this.fInsert.value).then(success => {
-        const book = success['path']['o'][2];
-        console.log(book);
-        this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
-        this.fInsert.reset();
+      const book = this.fInsert.value;
+      book.fpic = this.frontpic64;
+      book.bpic = this.backpic64;
+      console.log(book);
+      this.manageService.saveBook(book).then(success => {
+        if (success) {
+          this.frontpic64 = null;
+          this.backpic64 = null;
+          this.fInsert.reset();
+          this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
+        } else {
+          this.notification.error('Insert', 'ບັນທຶກຂໍ້ມູນລົ້ມເຫຼວ', this.toastOpton);
+        }
       }).catch(error => {
         this.notification.error('Insert', 'ບັນທຶກຂໍ້ມູນລົ້ມເຫຼວ', this.toastOpton);
         console.log(error);
@@ -175,17 +192,20 @@ export class HomeComponent implements OnInit {
 
   updateBook() {
     if (this.fUpdate.valid) {
-      this.manageService.updateBook(this.bDetail.key, this.fUpdate.value).then(success => {
+
+      const book = this.fUpdate.value;
+      book.fpic = this.frontpic64 ? this.frontpic64 : this.bDetail.bd.fpic;
+      book.bpic = this.backpic64 ? this.backpic64 : this.bDetail.bd.bpic;
+      console.log(book);
+      /*this.manageService.updateBook(this.bDetail.key, book).then(success => {
         this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
         this.checkUpdate = false;
         this.checkDetail = false;
       }).catch(error => {
         this.notification.error('Update', 'ເກີດຂໍ້ຜິດພາດແກ້ໄຂຂໍ້ມູນລົ້ມເຫຼວ', this.toastOpton);
         console.log(error);
-      })
+      })*/
     }
-    this.checkUpdate = false;
-    this.checkDetail = false;
   }
 
   deleteBook() {

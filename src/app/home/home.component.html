@@ -78,7 +78,7 @@
                   <md-icon>add_a_photo</md-icon>
                 </button>&nbsp;<span>Font-cover</span>
                 <input type="file" id="ipicinput1" placeholder="Picture" (change)="frontPicture($event)" hidden>
-                <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
+                <img style="width: 200px" *ngIf="frontpic64" [src]="frontpic64" alt="">
               </div>
               <div fxFlex="">
                 <button md-fab (click)="picfile('ipicinput2')"
@@ -86,7 +86,7 @@
                   <md-icon>add_a_photo</md-icon>
                 </button>&nbsp;<span>Back-cover</span>
                 <input type="file" id="ipicinput2"  placeholder="Picture" (change)="backPicture($event)" hidden>
-                <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
+                <img style="width: 200px" *ngIf="backpic64" [src]="backpic64" alt="">
               </div>
             </div>
             <div fxLayoutAlign="center none">
@@ -132,7 +132,7 @@
     <md-grid-list cols="{{cols}}" rowHeight="1:2" *ngIf="!checkInsert">
       <md-grid-tile *ngFor="let book of books">
         <md-card class="procard">
-          <img md-card-image src="http://via.placeholder.com/150x180">
+          <img md-card-image *ngIf="book.fpic" [src]="book.fpic" height="250px">
           <md-card-content>
             <md-card-subtitle class="namebook">{{book.bname}}</md-card-subtitle>
             <md-card-subtitle class="ownprice">{{book.import_price}}<span> ₭</span></md-card-subtitle>
@@ -197,16 +197,16 @@
                         style="background-color: #00E5FF;color: white;margin-bottom: 1rem">
                   <md-icon>add_a_photo</md-icon>
                 </button>&nbsp;<span>Font-cover</span>
-                <input type="file" id="upicinput1" placeholder="Picture" hidden>
-                <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
+                <input type="file" id="upicinput1" placeholder="Picture" (change)="frontPicture($event)" hidden>
+                <img style="width: 200px" *ngIf="bDetail.bd.fpic" [src]="bDetail.bd.fpic" alt="">
               </div>
               <div fxFlex="">
                 <button md-fab (click)="picfile('upicinput2')"
                         style="background-color: #69F0AE;color: white;margin-bottom: 1rem">
                   <md-icon>add_a_photo</md-icon>
                 </button>&nbsp;<span>Back-cover</span>
-                <input type="file" id="upicinput2" placeholder="Picture" hidden>
-                <img style="width: 200px" src="http://via.placeholder.com/150x180" alt="">
+                <input type="file" id="upicinput2" placeholder="Picture" (change)="backPicture($event)" hidden>
+                <img style="width: 200px" *ngIf="bDetail.bd.bpic" [src]="bDetail.bd.bpic" alt="">
               </div>
             </div>
             <div fxLayoutAlign="center none">
