@@ -128,10 +128,14 @@ export class HomeComponent implements OnInit {
   detailTohome() {
     this.checkUpdate = false;
     this.checkDetail = false;
+    this.frontpic64 = null;
+    this.backpic64 = null;
   }
 
   insertTohome() {
     this.checkInsert = false;
+    this.frontpic64 = null;
+    this.backpic64 = null;
   }
 
   onResize(event) {
@@ -167,10 +171,10 @@ export class HomeComponent implements OnInit {
       console.log(book);
       this.manageService.saveBook(book).then(success => {
         if (success) {
+          this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
           this.frontpic64 = null;
           this.backpic64 = null;
           this.fInsert.reset();
-          this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
         } else {
           this.notification.error('Insert', 'ບັນທຶກຂໍ້ມູນລົ້ມເຫຼວ', this.toastOpton);
         }
@@ -197,14 +201,14 @@ export class HomeComponent implements OnInit {
       book.fpic = this.frontpic64 ? this.frontpic64 : this.bDetail.bd.fpic;
       book.bpic = this.backpic64 ? this.backpic64 : this.bDetail.bd.bpic;
       console.log(book);
-      /*this.manageService.updateBook(this.bDetail.key, book).then(success => {
+      this.manageService.updateBook(this.bDetail.key, book).then(success => {
         this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
         this.checkUpdate = false;
         this.checkDetail = false;
       }).catch(error => {
         this.notification.error('Update', 'ເກີດຂໍ້ຜິດພາດແກ້ໄຂຂໍ້ມູນລົ້ມເຫຼວ', this.toastOpton);
         console.log(error);
-      })*/
+      })
     }
   }
 
