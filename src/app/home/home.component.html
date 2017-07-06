@@ -31,13 +31,16 @@
 
   </md-sidenav>
   <div *ngIf="!checkDetail">
+
     <!--Form Insert Prduct-->
     <md-grid-list cols="1" rowHeight="1100px" *ngIf="checkInsert">
+
       <md-grid-tile>
+        <button md-fab class="backhome" (click)="insertTohome()">
+          <md-icon>backspace</md-icon>
+        </button>
         <md-card class="insertcard">
-          <button md-button class="backhome" (click)="insertTohome()">
-            <md-icon>back</md-icon>
-          </button>
+
           <h1 style="text-align: center">Insert Book</h1>
           <br>
           <form novalidate [formGroup]="fInsert">
@@ -79,7 +82,7 @@
               </div>
               <div fxFlex="">
                 <button md-fab (click)="picfile('ipicinput2')"
-                        style="background-color: #64DD17;color: white;margin-bottom: 1rem">
+                        style="background-color: #69F0AE;color: white;margin-bottom: 1rem">
                   <md-icon>add_a_photo</md-icon>
                 </button>&nbsp;<span>Back-cover</span>
                 <input type="file" id="ipicinput2"  placeholder="Picture" (change)="backPicture($event)" hidden>
@@ -87,7 +90,10 @@
               </div>
             </div>
             <div fxLayoutAlign="center none">
-              <button type="submit" md-raised-button style="background-color: #FF6F00;color: white; margin:1rem"
+              <a type="submit" md-raised-button style="background-color: #F44336;color: white; margin:1rem"
+              (click)="fInsert.reset()">Cancel
+              </a>
+              <button type="submit" md-raised-button style="background-color: #64DD17 ;color: white; margin:1rem"
                       (click)="saveBook()">Save
               </button>
             </div>
@@ -129,8 +135,8 @@
           <img md-card-image src="http://via.placeholder.com/150x180">
           <md-card-content>
             <md-card-subtitle class="namebook">{{book.bname}}</md-card-subtitle>
-            <md-card-subtitle class="ownprice">{{book.import_price}}</md-card-subtitle>
-            <md-card-title class="saleprice">{{book.export_price}}</md-card-title>
+            <md-card-subtitle class="ownprice">{{book.import_price}}<span> ₭</span></md-card-subtitle>
+            <md-card-title class="saleprice">{{book.export_price}}<span> ₭</span></md-card-title>
           </md-card-content>
           <button md-mini-fab class="viewbtn" (click)="bookDetail(book.$key, book )">
             <md-icon>details</md-icon>
@@ -141,14 +147,19 @@
     </md-grid-list>
 
   </div>
+
+
   <div *ngIf="checkDetail">
+
     <!--Form Update Prduct-->
     <md-grid-list cols="1" rowHeight="1100px" *ngIf="checkUpdate">
+
       <md-grid-tile>
+        <button md-fab class="backhome" (click)="detailTohome()">
+          <md-icon>backspace</md-icon>
+        </button>
         <md-card class="insertcard">
-          <button md-button class="backhome" (click)="detailTohome()">
-            <md-icon>backspace</md-icon>
-          </button>
+
           <h1 style="text-align: center">Update Book</h1>
           <br>
           <form novalidate [formGroup]="fUpdate">
@@ -191,7 +202,7 @@
               </div>
               <div fxFlex="">
                 <button md-fab (click)="picfile('upicinput2')"
-                        style="background-color: #64DD17;color: white;margin-bottom: 1rem">
+                        style="background-color: #69F0AE;color: white;margin-bottom: 1rem">
                   <md-icon>add_a_photo</md-icon>
                 </button>&nbsp;<span>Back-cover</span>
                 <input type="file" id="upicinput2" placeholder="Picture" hidden>
@@ -199,7 +210,7 @@
               </div>
             </div>
             <div fxLayoutAlign="center none">
-              <button type="submit" md-raised-button style="background-color: #FF6F00;color: white; margin:1rem"
+              <button type="submit" md-raised-button style="background-color: #76FF03;color: white; margin:1rem"
                       (click)="updateBook()">Save
               </button>
             </div>
@@ -209,11 +220,12 @@
       </md-grid-tile>
     </md-grid-list>
 
+    <!--Detail Product-->
     <div fxLayoutAlign="center stretch" style="margin: 1rem" *ngIf="!checkUpdate">
+      <button md-fab class="backhome" (click)="detailTohome()">
+        <md-icon>backspace</md-icon>
+      </button>
       <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="center center">
-        <button md-button class="backhome" (click)="detailTohome()">
-          <md-icon>backspace</md-icon>
-        </button>
         <div fxFlex="">
           <img style="width: 250px" src="http://via.placeholder.com/150x180" alt="">
           <div style="margin: 1rem">
@@ -231,8 +243,8 @@
           <h1>Book Detail</h1>
           <h3><strong>Name:</strong> {{bDetail['bd']['bname']}}</h3>
           <h4><strong>Category:</strong> {{bDetail['bd']['category']}}</h4>
-          <h3><strong>Import:</strong> {{bDetail['bd']['import_price']}}</h3>
-          <h2><strong>Sale:</strong> {{bDetail['bd']['export_price']}}</h2>
+          <h3><strong>Import:</strong> {{bDetail['bd']['import_price']}}<span> ₭</span></h3>
+          <h2><strong>Sale:</strong> {{bDetail['bd']['export_price']}}<span> ₭</span></h2>
           <h1><strong>Description</strong></h1>
           <p>{{bDetail['bd']['description']}}</p>
         </div>
