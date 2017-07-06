@@ -25,7 +25,7 @@ export class UserService {
 
   register(data: any) {
     /** Get data from view and prepare to store on users document */
-    const userData = {email: data.email, fname: data.fname, lname: data.lname, picture: data.picname};
+    const userData = {email: data.email, fname: data.fname, lname: data.lname, picture: data.pic};
 
     /*** Get email and password to register on google authentication */
     const email = data.email, password = data.password;
