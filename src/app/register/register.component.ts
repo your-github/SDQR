@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-
+import {Router} from '@angular/router';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -7,7 +7,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
   ngOnInit() {
@@ -15,5 +15,9 @@ export class RegisterComponent implements OnInit {
 
   propic() {
     document.getElementById('propic').click();
+  }
+
+  goHome() {
+    this.router.navigate(['home']);
   }
 }
