@@ -35,13 +35,16 @@ import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
 import {HomeComponent} from './home/home.component';
 import {UserService} from './service/user.service';
+import { QrCodeComponent } from './home/qr-code/qr-code.component';
+
 /*** Router*/
 
 import {appRoutes} from './app.router';
 
 /*** Gallery*/
 import {GalleryConfig, GalleryModule} from 'ng-gallery';
-import {ManageComponent} from './home/manage/manage.component';
+
+
 
 export const galleryConfig: GalleryConfig = {
   // ...
@@ -63,7 +66,7 @@ export const firebaseConfig = {
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    ManageComponent
+    QrCodeComponent,
   ],
   imports: [
     BrowserModule,
