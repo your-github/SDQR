@@ -5,7 +5,7 @@ import {ManagementService} from '../service/management.service'
 import {FirebaseListObservable} from 'angularfire2/database';
 import {Router} from '@angular/router';
 import {UserService} from '../service/user.service'
-
+import {GalleryService} from 'ng-gallery';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +18,7 @@ import {UserService} from '../service/user.service'
 })
 export class HomeComponent implements OnInit {
   cols: number;
+  bimages: Array<{ src: string, thumbnail: string, text: string }>;
 
   checkInsert = false;
   checkDetail = false;
@@ -61,7 +62,8 @@ export class HomeComponent implements OnInit {
               private notification: NotificationsService,
               private manageService: ManagementService,
               private router: Router,
-              private  userService: UserService) {
+              private  userService: UserService,
+              private gallery: GalleryService) {
 
     this.fInsert = formBuilder.group({
       category: ['', Validators.required],
@@ -178,6 +180,19 @@ export class HomeComponent implements OnInit {
 
   bookDetail(key, book) {
     this.bDetail = {key: key, bd: book};
+    this.bimages = [
+      {
+        src: book.fpic,
+        thumbnail: book.fpic,
+        text: book.bname + ' | Front Cover'
+      },
+      {
+        src: book.bpic,
+        thumbnail: book.bpic,
+        text: book.bname + ' | Back Cover'
+      }
+    ];
+    this.gallery.load(this.bimages);
     this.checkDetail = true;
   }
 

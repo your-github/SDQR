@@ -85,13 +85,13 @@
                         style="background-color: #69F0AE;color: white;margin-bottom: 1rem">
                   <md-icon>add_a_photo</md-icon>
                 </button>&nbsp;<span>Back-cover</span>
-                <input type="file" id="ipicinput2"  placeholder="Picture" (change)="backPicture($event)" hidden>
+                <input type="file" id="ipicinput2" placeholder="Picture" (change)="backPicture($event)" hidden>
                 <img style="width: 200px" *ngIf="backpic64" [src]="backpic64" alt="">
               </div>
             </div>
             <div fxLayoutAlign="center none">
               <a type="submit" md-raised-button style="background-color: #F44336;color: white; margin:1rem"
-              (click)="fInsert.reset()">Cancel
+                 (click)="fInsert.reset()">Cancel
               </a>
               <button type="submit" md-raised-button style="background-color: #64DD17 ;color: white; margin:1rem"
                       (click)="saveBook()">Save
@@ -194,7 +194,7 @@
             <div fxLayout="row" fxLayoutAlign="center stretch">
               <div fxFlex="">
                 <a md-fab (click)="picfile('upicinput1')"
-                        style="background-color: #00E5FF;color: white;margin-bottom: 1rem">
+                   style="background-color: #00E5FF;color: white;margin-bottom: 1rem">
                   <md-icon>add_a_photo</md-icon>
                 </a>&nbsp;<span>Font-cover</span>
                 <input type="file" id="upicinput1" placeholder="Picture" (change)="frontPicture($event)" hidden>
@@ -205,7 +205,7 @@
               </div>
               <div fxFlex="">
                 <a md-fab (click)="picfile('upicinput2')"
-                        style="background-color: #69F0AE;color: white;margin-bottom: 1rem">
+                   style="background-color: #69F0AE;color: white;margin-bottom: 1rem">
                   <md-icon>add_a_photo</md-icon>
                 </a>&nbsp;<span>Back-cover</span>
                 <input type="file" id="upicinput2" placeholder="Picture" (change)="backPicture($event)" hidden>
@@ -231,9 +231,16 @@
       <button md-fab class="backhome" (click)="detailTohome()">
         <md-icon>backspace</md-icon>
       </button>
-      <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="center center">
+<!--      <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="center center">
         <div fxFlex="">
-          <img style="width: 250px" src="http://via.placeholder.com/150x180" alt="">
+
+          <div style="margin-right: 2rem">
+            <img style="width: 250px;height: 350px" *ngIf="bimages[0].src" [src]="bimages[0].src" (click)="gallery.set(0)"/>
+            <div>
+              <img src="http://via.placeholder.com/200x200" alt="">
+            </div>
+          </div>
+
           <div style="margin: 1rem">
             <button md-raised-button style="background-color:#E65100;color: white" (click)="update()">
               <md-icon>settings</md-icon>
@@ -254,9 +261,45 @@
           <h1><strong>Description</strong></h1>
           <p>{{bDetail['bd']['description']}}</p>
         </div>
-      </div>
+      </div>-->
+      <md-tab-group>
+        <md-tab label="Product Picture">
+          <div fxLayoutAlign="center center" fxLayout="column">
+            <img style="width: 250px;height: 350px" *ngIf="bimages[0].src" [src]="bimages[0].src" (click)="gallery.set(0)"/>
+
+            <div style="margin: 1rem">
+              <button md-raised-button style="background-color:#E65100;color: white" (click)="update()">
+                <md-icon>settings</md-icon>
+                Update
+              </button>
+              <button md-raised-button style="background-color:#D50000;color: white" (click)="deleteBook()">
+                <md-icon>delete_forever</md-icon>
+                Delete
+              </button>
+            </div>
+          </div>
+        </md-tab>
+        <md-tab label="Product Detail">
+          <div fxFlex="" fxLayout="column" fxLayoutAlign="center start">
+            <h1>Book Detail</h1>
+            <h3><strong>Name:</strong> {{bDetail['bd']['bname']}}</h3>
+            <h4><strong>Category:</strong> {{bDetail['bd']['category']}}</h4>
+            <h3><strong>Import:</strong> {{bDetail['bd']['import_price']}}<span> ₭</span></h3>
+            <h2><strong>Sale:</strong> {{bDetail['bd']['export_price']}}<span> ₭</span></h2>
+            <h1><strong>Description</strong></h1>
+            <p>{{bDetail['bd']['description']}}</p>
+          </div>
+        </md-tab>
+        <md-tab label="QR-Code">
+          <div fxLayoutAlign="center center">
+            <img style="width: 300px" src="http://via.placeholder.com/350x150" alt="">
+          </div>
+        </md-tab>
+
+      </md-tab-group>
     </div>
   </div>
+  <gallery-modal></gallery-modal>
 </md-sidenav-container>
 
 <div *ngIf="!checkDetail">
@@ -265,5 +308,6 @@
     <md-icon>add</md-icon>
   </button>
 </div>
+
 
 <simple-notifications [options]="toastOpton"></simple-notifications>

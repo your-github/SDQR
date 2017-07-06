@@ -14,7 +14,7 @@ import {
   MdButtonModule, MdCardModule, MdDialogModule, MdGridListModule, MdIconModule, MdIconRegistry, MdInputModule,
   MdMenuModule,
   MdProgressSpinnerModule, MdSelectModule,
-  MdSidenavModule, MdSlideToggleModule,
+  MdSidenavModule, MdSlideToggleModule, MdTabsModule,
   MdToolbarModule, MdTooltipModule
 } from '@angular/material';
 import 'hammerjs';
@@ -47,8 +47,40 @@ import {GalleryConfig, GalleryModule} from 'ng-gallery';
 
 
 export const galleryConfig: GalleryConfig = {
-  // ...
-}
+
+  'style': {
+    'background': '#121519',
+    'width': '100%',
+    'height': '100%',
+    'padding': '1em'
+  },
+  'animation': 'fade',
+  'loader': {
+    'width': '50px',
+    'height': '50px',
+    'position': 'center',
+    'icon': 'oval'
+  },
+  'description': {
+    'position': 'top',
+    'overlay': false,
+    'text': true,
+    'counter': true
+  },
+  'navigation': true,
+  'bullets': false,
+  'player': {
+    'autoplay': false,
+    'speed': 3000
+  },
+  'thumbnails': {
+    'width': 120,
+    'height': 90,
+    'position': 'bottom',
+    'space': 20
+  }
+
+};
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyDKfhalS9iXAH1Lqr_Z7HcoYF0mHHmHfd0',
@@ -86,6 +118,7 @@ export const firebaseConfig = {
     MdDialogModule,
     MdSlideToggleModule,
     MdSelectModule,
+    MdTabsModule,
     FlexLayoutModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
