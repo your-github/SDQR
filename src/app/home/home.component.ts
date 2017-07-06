@@ -215,6 +215,8 @@ export class HomeComponent implements OnInit {
   deleteBook() {
     this.manageService.deleteBook(this.bDetail.key).then(success => {
       this.notification.success('Delete', 'ລົບຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
+      this.frontpic64 = null;
+      this.backpic64 = null;
       this.checkUpdate = false;
       this.checkDetail = false;
     }).catch(error => {
