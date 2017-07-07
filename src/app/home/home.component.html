@@ -10,7 +10,7 @@
     <div fxLayoutAlign="center center" style="margin: 1rem" fxLayout="column">
       <!--<img src="http://via.placeholder.com/64x64" alt="">
       <h4>Name of User</h4>-->
-      <img *ngIf="userData.upic" [src]="userData.upic" alt="">
+      <img *ngIf="userData.upic" [src]="userData.upic" alt="" style="width: 72px">
       <h4 *ngIf="userData.upic">{{userData.fname}} {{userData.lname}}</h4>
     </div>
 
@@ -253,6 +253,7 @@
             <h2><strong>Auther:</strong>{{bDetail['bd']['author']}}</h2>
             <h2><strong>Import:</strong> {{bDetail['bd']['import_price']}}<span> ₭</span></h2>
             <h1><strong>Sale:</strong> {{bDetail['bd']['export_price']}}<span> ₭</span></h1>
+            <h2><strong>Quantity:</strong>{{bDetail['bd']['quantity']}}</h2>
             <h3><strong>Description</strong></h3>
             <p>{{bDetail['bd']['description']}}</p>
           </div>
