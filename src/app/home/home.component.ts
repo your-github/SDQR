@@ -35,6 +35,9 @@ export class HomeComponent implements OnInit {
   bpic: File;
 
   /** Categories */
+  userData: { email: string, fname: string, lname: string, upic?: string };
+
+  /** Categories */
   categories: FirebaseListObservable<any>;
 
   /** books object */
@@ -74,6 +77,11 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     const winwidth = window.innerWidth;
     this.resizeWindows(winwidth);
+    this.userService.getUser().subscribe(success => {
+     this.userData = success[0];
+     }, error => {
+     console.log(error);
+     });
     this.manageService.getCategories().subscribe(success => {
       this.categories = success;
     }, error => {
@@ -175,7 +183,7 @@ export class HomeComponent implements OnInit {
     if (this.fInsert.valid) {
       const book = this.fInsert.value;
       this.manageService.saveBook(book).then(success => {
-        const keypath = success.path.o[2];
+        const keypath = success.path.o[success.path.o.length - 1];
         if (this.fpic) {
           this.manageService.uploadPicture('/dbook/books/', keypath, this.fpic).then(fSuccess => {
             const frontpic = fSuccess.downloadURL;
@@ -210,7 +218,7 @@ export class HomeComponent implements OnInit {
             this.fInsert.reset();
             console.log(fError);
           })
-        }else {
+        } else {
           this.successMessage();
           this.fInsert.reset();
         }
@@ -221,7 +229,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  successMessage(){
+  successMessage() {
     this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
     this.frontpic64 = null;
     this.fpic = null;
@@ -269,7 +277,7 @@ export class HomeComponent implements OnInit {
 
       const book = this.fUpdate.value;
       /*book.fpic = this.frontpic64 ? this.frontpic64 : this.bDetail.bd.fpic;
-      book.bpic = this.backpic64 ? this.backpic64 : this.bDetail.bd.bpic;*/
+       book.bpic = this.backpic64 ? this.backpic64 : this.bDetail.bd.bpic;*/
       console.log(book);
       this.manageService.updateBook(this.bDetail.key, book).then(success => {
         if (this.fpic) {
@@ -300,7 +308,7 @@ export class HomeComponent implements OnInit {
             this.updateSuccess();
             console.log(fError);
           })
-        }else {
+        } else {
           this.updateSuccess();
         }
       }).catch(error => {
@@ -310,7 +318,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  updateSuccess(){
+  updateSuccess() {
     this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
     this.frontpic64 = null;
     this.fpic = null;

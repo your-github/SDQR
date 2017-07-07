@@ -31,13 +31,11 @@ export class RegisterComponent implements OnInit {
     pauseOnHover: true
   };
 
-  constructor(
-    private router: Router,
-    private formBuild: FormBuilder,
-    private userService: UserService,
-    private notification: NotificationsService,
-    private managerService: ManagementService
-  ) {
+  constructor(private router: Router,
+              private formBuild: FormBuilder,
+              private userService: UserService,
+              private notification: NotificationsService,
+              private managerService: ManagementService) {
     this.fRegister = formBuild.group({
       'fname': ['', Validators.required],
       'lname': ['', Validators.required],
@@ -56,8 +54,8 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
-  propic() {
-    document.getElementById('propic').click();
+  clickpic() {
+    document.getElementById('clickPic').click();
   }
 
   goHome() {
@@ -85,27 +83,37 @@ export class RegisterComponent implements OnInit {
           lname: user.lname
         }
         this.userService.saveUser(userPost, userToken).then(saveSuccess => {
-          const key = success.path.o[2];
-          this.managerService.uploadPicture('/dbook/users/', key, this.userpic).then(picSuccess =>{
-            const userpicUrl = picSuccess.downloadURL;
-            this.userService.updateUser(key, {upic: userpicUrl}, userToken).then(uSuccess => {
-              this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ສຳເລັດແລ້ວ', this.toastOpton)
-              this.fRegister.reset();
-            }).catch(uError => {
-              console.log(uError);
+          console.log(saveSuccess);
+          const key = saveSuccess.path.o[saveSuccess.path.o.length - 1];
+          console.log(key);
+          if (this.userpic) {
+            this.managerService.uploadPicture('/dbook/users/', key, this.userpic).then(picSuccess => {
+              const userpicUrl = picSuccess.downloadURL;
+              this.userService.updateUser(key, {upic: userpicUrl}, userToken).then(uSuccess => {
+                this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ສຳເລັດແລ້ວ', this.toastOpton)
+                this.userpic = null;
+                this.userpic64 = null;
+                this.fRegister.reset();
+              }).catch(uError => {
+                this.userpic = null;
+                this.userpic64 = null;
+                console.log(uError);
+              })
+            }).catch(picError => {
+              this.userpic = null;
+              this.userpic64 = null;
+              console.log(picError);
             })
-          }).catch(picError => {
-            console.log(picError);
-          })
+          }
         }).catch(saveError => {
           /*this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ສຳເລັດແລ້ວ', this.toastOpton)*/
           console.log(saveError);
         })
-       console.log(success);
-       }).catch(error => {
+        console.log(success);
+      }).catch(error => {
         this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ລົ້ມເຫຼວ', this.toastOpton)
-       console.log(error);
-       });
+        console.log(error);
+      });
     }
   }
 }

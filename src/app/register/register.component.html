@@ -2,7 +2,7 @@
   <md-icon style="margin-right: auto;cursor: pointer" (click)="goHome()">backspace</md-icon>
   <span style="margin-right: auto;">SDQR</span>
 </md-toolbar>
-<form novalidate [formGroup] = "fRegister" (submit)="register()">
+<form novalidate [formGroup]="fRegister" (submit)="register()">
   <div fxLayoutAlign="center center">
     <md-card fxLayout="column" class="regiscard">
       <h1>Register Form</h1>
@@ -22,10 +22,10 @@
         <input mdInput type="password" formControlName="confirm" id="confirm" [(ngModel)]="confirm" placeholder="Confirm password">
         <!--<p class="ng-invalid">Password is not matched</p>-->
       </md-input-container>
-      <button md-fab (click)="propic()" style="background-color: #18FFFF;color: white;margin-bottom: 1rem">
+      <a md-fab (click)="clickpic()" style="background-color: #18FFFF;color: white;margin-bottom: 1rem">
         <md-icon>add_a_photo</md-icon>
-      </button>
-      <input type="file" id="propic" placeholder="Picture" (change)="userPicture($event)" hidden>
+      </a>
+      <input type="file" id="clickPic" placeholder="Picture" (change)="userPicture($event)" hidden>
       <img style="width: 200px" *ngIf="userpic64" [src]="userpic64" alt="">
       <button type="submit" md-raised-button style="background-color: #76FF03;color: white;margin-top: 1rem">
         Register
