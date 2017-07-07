@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NotificationsService} from 'angular2-notifications';
-import {ManagementService} from '../service/management.service'
+import {ManagementService} from '../service/management.service';
 import {FirebaseListObservable} from 'angularfire2/database';
 import {Router} from '@angular/router';
 import {UserService} from '../service/user.service'
@@ -30,7 +30,9 @@ export class HomeComponent implements OnInit {
 
   /** image property */
   frontpic64: any;
+  fpic: File;
   backpic64: any;
+  bpic: File;
 
   /** Categories */
   categories: FirebaseListObservable<any>;
@@ -42,11 +44,11 @@ export class HomeComponent implements OnInit {
     bd: {
       author: string,
       bname: string,
-      bpic: string,
+      bpic?: string,
       category: string,
       description: string,
       export_price: string,
-      fpic: string,
+      fpic?: string,
       import_price: string,
       quantity: string
     }
@@ -67,18 +69,6 @@ export class HomeComponent implements OnInit {
               private router: Router,
               private  userService: UserService,
               private gallery: GalleryService) {
-
-    this.fInsert = formBuilder.group({
-      category: ['', Validators.required],
-      author: ['', Validators.required],
-      bname: ['', Validators.required],
-      import_price: ['', Validators.required],
-      export_price: ['', Validators.required],
-      quantity: ['', Validators.required],
-      description: ['', Validators.required]
-    });
-
-
   }
 
   ngOnInit() {
@@ -108,24 +98,38 @@ export class HomeComponent implements OnInit {
 
   frontPicture(event) {
     const file = event.target.files.item(0);
-    this.frontpic64 = file;
+    this.fpic = file;
+    const base64 = new FileReader();
+    base64.onload = () => {
+      this.frontpic64 = base64.result;
+    }
+    base64.readAsDataURL(file);
   }
 
   backPicture(event) {
     const file = event.target.files.item(0);
-      this.backpic64 = file;
+    this.bpic = file;
+    const base64 = new FileReader();
+    base64.onload = () => {
+      this.backpic64 = base64.result;
+    }
+    base64.readAsDataURL(file);
   }
 
   detailTohome() {
     this.frontpic64 = null;
+    this.fpic = null;
     this.backpic64 = null;
+    this.bpic = null;
     this.checkUpdate = false;
     this.checkDetail = false;
   }
 
   insertTohome() {
     this.frontpic64 = null;
+    this.fpic = null;
     this.backpic64 = null;
+    this.bpic = null;
     this.checkInsert = false;
   }
 
@@ -151,27 +155,78 @@ export class HomeComponent implements OnInit {
   }
 
   addBooks() {
+    this.frontpic64 = null;
+    this.fpic = null;
+    this.backpic64 = null;
+    this.bpic = null;
+    this.fInsert = this.formBuilder.group({
+      category: ['', Validators.required],
+      author: ['', Validators.required],
+      bname: ['', Validators.required],
+      import_price: ['', Validators.required],
+      export_price: ['', Validators.required],
+      quantity: ['', Validators.required],
+      description: ['', Validators.required]
+    });
     this.checkInsert = true;
   }
 
   saveBook() {
     if (this.fInsert.valid) {
       const book = this.fInsert.value;
-      console.log(book);
-      this.manageService.saveBook(book, this.frontpic64, this.backpic64).then(success => {
-        if (success) {
-          this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
-          this.frontpic64 = null;
-          this.backpic64 = null;
+      this.manageService.saveBook(book).then(success => {
+        const keypath = success.path.o[2];
+        if (this.fpic) {
+          this.manageService.uploadPicture('/dbook/books/', keypath, this.fpic).then(fSuccess => {
+            const frontpic = fSuccess.downloadURL;
+            if (this.bpic) {
+              this.manageService.uploadPicture('/dbook/books/', keypath, this.bpic).then(bSuccess => {
+                const backpic = bSuccess.downloadURL;
+                this.manageService.updateBook(keypath, {fpic: frontpic, bpic: backpic}).then(uSuccess => {
+                  this.successMessage();
+                  this.fInsert.reset();
+                }).catch(uError => {
+                  this.successMessage();
+                  this.fInsert.reset();
+                  console.log(uError)
+                })
+              }).catch(bError => {
+                this.successMessage();
+                this.fInsert.reset();
+                console.log(bError);
+              })
+            } else {
+              this.manageService.updateBook(keypath, {fpic: frontpic, bpic: null}).then(uSuccess => {
+                this.successMessage();
+                this.fInsert.reset();
+              }).catch(uError => {
+                this.successMessage();
+                this.fInsert.reset();
+                console.log(uError)
+              })
+            }
+          }).catch(fError => {
+            this.successMessage();
+            this.fInsert.reset();
+            console.log(fError);
+          })
+        }else {
+          this.successMessage();
           this.fInsert.reset();
-        } else {
-          this.notification.error('Insert', 'ບັນທຶກຂໍ້ມູນລົ້ມເຫຼວ', this.toastOpton);
         }
       }).catch(error => {
         this.notification.error('Insert', 'ບັນທຶກຂໍ້ມູນລົ້ມເຫຼວ', this.toastOpton);
         console.log(error);
       });
     }
+  }
+
+  successMessage(){
+    this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
+    this.frontpic64 = null;
+    this.fpic = null;
+    this.backpic64 = null;
+    this.bpic = null;
   }
 
   bookDetail(key, book) {
@@ -193,6 +248,10 @@ export class HomeComponent implements OnInit {
   }
 
   update() {
+    this.frontpic64 = null;
+    this.fpic = null;
+    this.backpic64 = null;
+    this.bpic = null;
     this.fUpdate = this.formBuilder.group({
       category: [this.bDetail.bd.category, Validators.required],
       author: [this.bDetail.bd.author, Validators.required],
@@ -209,11 +268,41 @@ export class HomeComponent implements OnInit {
     if (this.fUpdate.valid) {
 
       const book = this.fUpdate.value;
+      /*book.fpic = this.frontpic64 ? this.frontpic64 : this.bDetail.bd.fpic;
+      book.bpic = this.backpic64 ? this.backpic64 : this.bDetail.bd.bpic;*/
       console.log(book);
       this.manageService.updateBook(this.bDetail.key, book).then(success => {
-        this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
-        this.checkUpdate = false;
-        this.checkDetail = false;
+        if (this.fpic) {
+          this.manageService.uploadPicture('/dbook/books/', this.bDetail.key, this.fpic).then(fSuccess => {
+            const frontpic = fSuccess.downloadURL;
+            if (this.bpic) {
+              this.manageService.uploadPicture('/dbook/books/', this.bDetail.key, this.bpic).then(bSuccess => {
+                const backpic = bSuccess.downloadURL;
+                this.manageService.updateBook(this.bDetail.key, {fpic: frontpic, bpic: backpic}).then(uSuccess => {
+                  this.updateSuccess();
+                }).catch(uError => {
+                  this.updateSuccess();
+                  console.log(uError)
+                })
+              }).catch(bError => {
+                this.updateSuccess();
+                console.log(bError);
+              })
+            } else {
+              this.manageService.updateBook(this.bDetail.key, {fpic: frontpic, bpic: null}).then(uSuccess => {
+                this.updateSuccess();
+              }).catch(uError => {
+                this.updateSuccess();
+                console.log(uError)
+              })
+            }
+          }).catch(fError => {
+            this.updateSuccess();
+            console.log(fError);
+          })
+        }else {
+          this.updateSuccess();
+        }
       }).catch(error => {
         this.notification.error('Update', 'ເກີດຂໍ້ຜິດພາດແກ້ໄຂຂໍ້ມູນລົ້ມເຫຼວ', this.toastOpton);
         console.log(error);
@@ -221,11 +310,23 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  updateSuccess(){
+    this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
+    this.frontpic64 = null;
+    this.fpic = null;
+    this.backpic64 = null;
+    this.bpic = null;
+    this.checkUpdate = false;
+    this.checkDetail = false;
+  }
+
   deleteBook() {
     this.manageService.deleteBook(this.bDetail.key).then(success => {
       this.notification.success('Delete', 'ລົບຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
       this.frontpic64 = null;
+      this.fpic = null;
       this.backpic64 = null;
+      this.bpic = null;
       this.checkUpdate = false;
       this.checkDetail = false;
     }).catch(error => {

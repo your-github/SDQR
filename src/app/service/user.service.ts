@@ -25,26 +25,37 @@ export class UserService {
 
   register(data: any) {
     /** Get data from view and prepare to store on users document */
-    const userData = {email: data.email, fname: data.fname, lname: data.lname, picture: data.pic};
 
     /*** Get email and password to register on google authentication */
     const email = data.email, password = data.password;
 
     return this.Auth.auth.createUserWithEmailAndPassword(email, password)
       .then((success) => {
-        console.log(success);
         const registertoken = success.uid + success.m;
-        const userdb = this.firebasedb.list('/dbook/users/' + registertoken);
-        userdb.push(userData).then(succ => {
-          return true;
-        }).catch(err => {
-          console.log(err);
-          return false;
-        });
+        return registertoken;
       }).catch((error) => {
         console.log(error);
         return false;
       });
+  }
+
+  saveUser(userData, regToken) {
+    const userdb = this.firebasedb.list('/dbook/users/' + regToken);
+    return userdb.push(userData).then(succ => {
+      return succ;
+    }).catch(err => {
+      console.log(err);
+      return false;
+    });
+  }
+
+  updateUser(_key, _data, regToken) {
+    const userdb = this.firebasedb.list('/dbook/users/' + regToken);
+    return userdb.update(_key, _data).then(success => {
+      return success;
+    }).catch(error => {
+      return error;
+    })
   }
 
   login(user: any) {

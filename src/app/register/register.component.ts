@@ -3,22 +3,41 @@ import {Router} from '@angular/router';
 import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import {UserService} from '../service/user.service';
 import {PasswordValidators} from 'ngx-validators';
+import {NotificationsService} from 'angular2-notifications';
+import {ManagementService} from '../service/management.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  providers: [ManagementService]
 })
 export class RegisterComponent implements OnInit {
 
   fRegister: FormGroup;
 
   userpic64: any;
+  userpic: File;
 
   pass: string;
   confirm: string;
 
-  constructor(private router: Router, private formBuild: FormBuilder, private userService: UserService) {
+  toastOpton = {
+    timeOut: 3000,
+    position: ['top', 'right'],
+    showProgressBar: true,
+    clickToClose: true,
+    animate: 'fromRight',
+    pauseOnHover: true
+  };
+
+  constructor(
+    private router: Router,
+    private formBuild: FormBuilder,
+    private userService: UserService,
+    private notification: NotificationsService,
+    private managerService: ManagementService
+  ) {
     this.fRegister = formBuild.group({
       'fname': ['', Validators.required],
       'lname': ['', Validators.required],
@@ -47,6 +66,7 @@ export class RegisterComponent implements OnInit {
 
   userPicture(event) {
     const file = event.target.files.item(0);
+    this.userpic = file;
     const base64 = new FileReader();
     base64.onload = () => {
       this.userpic64 = base64.result;
@@ -57,11 +77,33 @@ export class RegisterComponent implements OnInit {
   register() {
     if (this.fRegister.valid) {
       const user = this.fRegister.value;
-      user.pic = this.userpic64;
-      console.log(user);
       this.userService.register(user).then(success => {
+        const userToken = success;
+        const userPost = {
+          email: user.email,
+          fname: user.fname,
+          lname: user.lname
+        }
+        this.userService.saveUser(userPost, userToken).then(saveSuccess => {
+          const key = success.path.o[2];
+          this.managerService.uploadPicture('/dbook/users/', key, this.userpic).then(picSuccess =>{
+            const userpicUrl = picSuccess.downloadURL;
+            this.userService.updateUser(key, {upic: userpicUrl}, userToken).then(uSuccess => {
+              this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ສຳເລັດແລ້ວ', this.toastOpton)
+              this.fRegister.reset();
+            }).catch(uError => {
+              console.log(uError);
+            })
+          }).catch(picError => {
+            console.log(picError);
+          })
+        }).catch(saveError => {
+          /*this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ສຳເລັດແລ້ວ', this.toastOpton)*/
+          console.log(saveError);
+        })
        console.log(success);
        }).catch(error => {
+        this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ລົ້ມເຫຼວ', this.toastOpton)
        console.log(error);
        });
     }

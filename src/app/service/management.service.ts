@@ -23,15 +23,24 @@ export class ManagementService {
     return this.db;
   }
 
-  saveBook(_data, fpic: File, bpic: File) {
+  saveBook(_data) {
     const data = _data;
     return this.db.push(data).then((success) => {
-      console.log(success);
-      return true;
+      return success;
     }).catch((error) => {
       console.log(error)
       return false;
     });
+  }
+
+  uploadPicture(path, key, file: File) {
+    const firebaseStorage = firebase.storage().ref();
+    return firebaseStorage.child(path + key + '/' + file.name).put(file).then(success => {
+      return success;
+    }).catch(fError => {
+      console.log(fError);
+      return false;
+    })
   }
 
   updateBook(_key, _data) {

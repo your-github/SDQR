@@ -9,7 +9,7 @@ export class ShareSecureService  implements CanActivate {
     if (localStorage.getItem('sdqrusersession')) {
       return true;
     }
-    this.route.navigate(['/home']);
+    this.route.navigate(['/']);
     return false;
   }
 

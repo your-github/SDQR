@@ -11,7 +11,7 @@ export class LoginSecureService implements CanActivate {
     if (!localStorage.getItem('sdqrusersession')) {
       return true;
     }
-    this.route.navigate(['/']);
+    this.route.navigate(['/home']);
     return false;
   }
 
