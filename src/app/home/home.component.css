@@ -15,10 +15,13 @@ md-toolbar {
 md-sidenav-container {
     margin-top: 4rem;
 }
+md-grid-tile {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
 .procard {
     margin: 1rem;
     width: 200px;
-
 }
 
 .asbtn {
@@ -65,6 +68,10 @@ md-sidenav-container {
   top: 5px;
   background-color: #D50000;
   color: white;
+}
+
+md-tab-group{
+  margin-top: 3rem;
 }
 
 /*Insert & Update Form Book*/

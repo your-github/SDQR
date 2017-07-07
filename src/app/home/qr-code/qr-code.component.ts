@@ -5,7 +5,7 @@ import {edSecure} from '../../service/encryption/secure';
   selector: 'app-qr-code',
   template: `
     <div>
-      <qr-code [value]='qrdata' [size]="250"></qr-code>
+      <qr-code [value]='qrdata' [size]="350"></qr-code>
     </div>
   `,
   styles: []
