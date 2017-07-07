@@ -32,6 +32,9 @@ export class HomeComponent implements OnInit {
   frontpic64: any;
   backpic64: any;
 
+  /** Categories */
+  categories: FirebaseListObservable<any>;
+
   /** books object */
   books: FirebaseListObservable<any>;
   bDetail: {
@@ -81,6 +84,11 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     const winwidth = window.innerWidth;
     this.resizeWindows(winwidth);
+    this.manageService.getCategories().subscribe(success => {
+      this.categories = success;
+    }, error => {
+      console.log(error);
+    });
     this.manageService.getBooks().subscribe(success => {
       this.books = success;
     }, error => {
@@ -100,35 +108,25 @@ export class HomeComponent implements OnInit {
 
   frontPicture(event) {
     const file = event.target.files.item(0);
-    const base64 = new FileReader();
-    base64.onload = () => {
-      this.frontpic64 = base64.result;
-      console.log(this.frontpic64);
-    }
-    base64.readAsDataURL(file);
+    this.frontpic64 = file;
   }
 
   backPicture(event) {
     const file = event.target.files.item(0);
-    const base64 = new FileReader();
-    base64.onload = () => {
-      this.backpic64 = base64.result;
-      console.log(this.backpic64);
-    }
-    base64.readAsDataURL(file);
+      this.backpic64 = file;
   }
 
   detailTohome() {
-    this.checkUpdate = false;
-    this.checkDetail = false;
     this.frontpic64 = null;
     this.backpic64 = null;
+    this.checkUpdate = false;
+    this.checkDetail = false;
   }
 
   insertTohome() {
-    this.checkInsert = false;
     this.frontpic64 = null;
     this.backpic64 = null;
+    this.checkInsert = false;
   }
 
   onResize(event) {
@@ -159,10 +157,8 @@ export class HomeComponent implements OnInit {
   saveBook() {
     if (this.fInsert.valid) {
       const book = this.fInsert.value;
-      book.fpic = this.frontpic64;
-      book.bpic = this.backpic64;
       console.log(book);
-      this.manageService.saveBook(book).then(success => {
+      this.manageService.saveBook(book, this.frontpic64, this.backpic64).then(success => {
         if (success) {
           this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
           this.frontpic64 = null;
@@ -213,8 +209,6 @@ export class HomeComponent implements OnInit {
     if (this.fUpdate.valid) {
 
       const book = this.fUpdate.value;
-      book.fpic = this.frontpic64 ? this.frontpic64 : this.bDetail.bd.fpic;
-      book.bpic = this.backpic64 ? this.backpic64 : this.bDetail.bd.bpic;
       console.log(book);
       this.manageService.updateBook(this.bDetail.key, book).then(success => {
         this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);

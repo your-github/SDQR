@@ -3,6 +3,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
+import * as firebase from 'firebase';
 
 @Injectable()
 export class ManagementService {
@@ -13,13 +14,19 @@ export class ManagementService {
     this.db = firebasedb.list('/dbook/books');
   }
 
+  getCategories(): FirebaseListObservable<any> {
+    const catagories = this.firebasedb.list('/dbook/categories');
+    return catagories;
+  }
+
   getBooks(): FirebaseListObservable<any> {
     return this.db;
   }
 
-  saveBook(_data) {
+  saveBook(_data, fpic: File, bpic: File) {
     const data = _data;
     return this.db.push(data).then((success) => {
+      console.log(success);
       return true;
     }).catch((error) => {
       console.log(error)
