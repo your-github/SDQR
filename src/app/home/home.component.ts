@@ -33,8 +33,9 @@ export class HomeComponent implements OnInit {
   fpic: File;
   backpic64: any;
   bpic: File;
+  catename: string;
 
-  /** Categories */
+  /** Users */
   userData: { email: string, fname: string, lname: string, upic?: string };
 
   /** Categories */
@@ -49,6 +50,7 @@ export class HomeComponent implements OnInit {
       bname: string,
       bpic?: string,
       category: string,
+      category_name: string,
       description: string,
       export_price: string,
       fpic?: string,
@@ -66,6 +68,7 @@ export class HomeComponent implements OnInit {
     pauseOnHover: true
   };
 
+
   constructor(private formBuilder: FormBuilder,
               private notification: NotificationsService,
               private manageService: ManagementService,
@@ -78,10 +81,10 @@ export class HomeComponent implements OnInit {
     const winwidth = window.innerWidth;
     this.resizeWindows(winwidth);
     this.userService.getUser().subscribe(success => {
-     this.userData = success[0];
-     }, error => {
-     console.log(error);
-     });
+      this.userData = success[0];
+    }, error => {
+      console.log(error);
+    });
     this.manageService.getCategories().subscribe(success => {
       this.categories = success;
     }, error => {
@@ -182,6 +185,7 @@ export class HomeComponent implements OnInit {
   saveBook() {
     if (this.fInsert.valid) {
       const book = this.fInsert.value;
+      book.category_name = this.catename;
       this.manageService.saveBook(book).then(success => {
         const keypath = success.path.o[success.path.o.length - 1];
         if (this.fpic) {
@@ -278,6 +282,7 @@ export class HomeComponent implements OnInit {
       const book = this.fUpdate.value;
       /*book.fpic = this.frontpic64 ? this.frontpic64 : this.bDetail.bd.fpic;
        book.bpic = this.backpic64 ? this.backpic64 : this.bDetail.bd.bpic;*/
+      book.category_name = this.catename;
       console.log(book);
       this.manageService.updateBook(this.bDetail.key, book).then(success => {
         if (this.fpic) {
@@ -356,5 +361,7 @@ export class HomeComponent implements OnInit {
       console.log(error);
     })
   }
-
+  currenCategory(catename){
+    this.catename = catename;
+  }
 }

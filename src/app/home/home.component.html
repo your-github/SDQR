@@ -7,11 +7,11 @@
 <md-sidenav-container fullscreen>
 
   <md-sidenav #sidenav mode="over">
-    <div fxLayoutAlign="center center" style="margin: 1rem" fxLayout="column">
+    <div fxLayoutAlign="center center" style="margin: 1rem" fxLayout="column" *ngIf="userData">
       <!--<img src="http://via.placeholder.com/64x64" alt="">
       <h4>Name of User</h4>-->
-      <img *ngIf="userData.upic" [src]="userData.upic" alt="" style="width: 72px">
-      <h4 *ngIf="userData.upic">{{userData.fname}} {{userData.lname}}</h4>
+      <img [src]="userData.upic" alt="" style="width: 72px">
+      <h4>{{userData.fname}} {{userData.lname}}</h4>
     </div>
 
     <a md-button class="asbtn" (click)="homeEvt(sidenav)">
@@ -47,7 +47,7 @@
           <br>
           <form novalidate [formGroup]="fInsert">
             <md-select formControlName="category" placeholder="Category">
-              <md-option value="{{category.$key}}" *ngFor="let category of categories">{{category.name}}</md-option>
+              <md-option value="{{category.$key}}" *ngFor="let category of categories" (click)="currenCategory(category.name)">{{category.name}}</md-option>
             </md-select>
             <md-input-container>
               <input mdInput formControlName="bname" type="text" placeholder="Book name" value="">
@@ -248,7 +248,7 @@
         </md-tab>
         <md-tab label="Product Detail">
           <div fxFlex="" fxLayout="column" fxLayoutAlign="center start" style="margin-top: 1rem">
-            <h3><strong>Category:</strong> {{bDetail['bd']['category']}}</h3>
+            <h3><strong>Category:</strong> {{bDetail['bd']['category_name']}}</h3>
             <h1><strong>Name:</strong> {{bDetail['bd']['bname']}}</h1>
             <h2><strong>Auther:</strong>{{bDetail['bd']['author']}}</h2>
             <h2><strong>Import:</strong> {{bDetail['bd']['import_price']}}<span> ₭</span></h2>
