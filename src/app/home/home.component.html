@@ -45,7 +45,7 @@
           <br>
           <form novalidate [formGroup]="fInsert">
             <md-select formControlName="category" placeholder="Category">
-              <md-option value="{{category.$key}}" *ngFor="let category of categories">{{category.nme}}</md-option>
+              <md-option value="{{category.$key}}" *ngFor="let category of categories">{{category.name}}</md-option>
             </md-select>
             <md-input-container>
               <input mdInput formControlName="bname" type="text" placeholder="Book name" value="">
@@ -162,7 +162,7 @@
           <form novalidate [formGroup]="fUpdate">
 
             <md-select formControlName="category" placeholder="Catagory">
-              <md-option value="{{category.$key}}" *ngFor="let category of categories">{{category.nme}}</md-option>
+              <md-option value="{{category.$key}}" *ngFor="let category of categories">{{category.name}}</md-option>
             </md-select>
 
             <md-input-container>
