@@ -10,8 +10,8 @@
     <div fxLayoutAlign="center center" style="margin: 1rem" fxLayout="column">
       <!--<img src="http://via.placeholder.com/64x64" alt="">
       <h4>Name of User</h4>-->
-      <img [src]="userData.upic" alt="">
-      <h4>{{userData.fname}} {{userData.lname}}</h4>
+      <img *ngIf="userData.upic" [src]="userData.upic" alt="">
+      <h4 *ngIf="userData.upic">{{userData.fname}} {{userData.lname}}</h4>
     </div>
 
     <a md-button class="asbtn" (click)="homeEvt(sidenav)">
