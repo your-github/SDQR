@@ -37,7 +37,7 @@ export class QrCodeComponent implements OnInit {
     this.qrdata = `
     {
       "id": "${this.protect.encrytionUser(bookdt.key)}",
-      "ip": ${this.protect.encrytionNumber(bookdt.bd.import_price)},
+      "ip": "${this.protect.encrytionNumber(bookdt.bd.import_price)}",
       "price": ${bookdt.bd.export_price}
     }
     `;
