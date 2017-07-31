@@ -36,6 +36,7 @@ import {RegisterComponent} from './register/register.component';
 import {HomeComponent} from './home/home.component';
 import {UserService} from './service/user.service';
 import { QrCodeComponent } from './home/qr-code/qr-code.component';
+import { ReportComponent } from './report/report.component';
 
 /*** Router*/
 
@@ -46,6 +47,7 @@ import {GalleryConfig, GalleryModule} from 'ng-gallery';
 
 /*** Qrcode*/
 import { QRCodeModule } from 'angular2-qrcode';
+
 
 
 export const galleryConfig: GalleryConfig = {
@@ -101,6 +103,7 @@ export const firebaseConfig = {
     RegisterComponent,
     HomeComponent,
     QrCodeComponent,
+    ReportComponent,
   ],
   imports: [
     BrowserModule,

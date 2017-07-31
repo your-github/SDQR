@@ -118,6 +118,10 @@ export class HomeComponent implements OnInit {
     sidenav.close();
     this.router.navigate(['home']);
   }
+  reportEvt(sidenav) {
+    sidenav.close();
+    this.router.navigate(['report']);
+  }
 
   registerEvt(sidenav) {
     sidenav.close();

@@ -5,12 +5,14 @@ import {ShareSecureService} from './protected/share.service';
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
+import {ReportComponent} from './report/report.component';
 
 
 const router: Routes = [
   {path: '', component: LoginComponent, canActivate: [LoginSecureService]},
   {path: 'home', component: HomeComponent, canActivate: [ShareSecureService]},
   {path: 'register', component: RegisterComponent, canActivate: [ShareSecureService]},
+  {path: 'report', component: ReportComponent, canActivate: [ShareSecureService]},
   {path: '**', redirectTo: ''}
 ];
 

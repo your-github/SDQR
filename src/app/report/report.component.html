@@ -1,0 +1,40 @@
+<md-toolbar color="primary">
+  <md-icon style="margin-right: auto;cursor: pointer" (click)="sidenav.toggle()">menu</md-icon>
+  <span style="margin-right: auto;">SDQR</span>
+</md-toolbar>
+
+
+<md-sidenav-container fullscreen>
+
+  <md-sidenav #sidenav mode="over">
+    <div fxLayoutAlign="center center" style="margin: 1rem" fxLayout="column" *ngIf="userData">
+      <!--<img src="http://via.placeholder.com/64x64" alt="">
+      <h4>Name of User</h4>-->
+      <img [src]="userData.upic" alt="" style="width: 72px">
+      <h4>{{userData.fname}} {{userData.lname}}</h4>
+    </div>
+
+    <a md-button class="asbtn" (click)="homeEvt(sidenav)">
+      <md-icon>home</md-icon>
+      Home
+    </a>
+    <a md-button class="asbtn" (click)="reportEvt(sidenav)">
+      <md-icon>dashboard</md-icon>
+      Report
+    </a>
+    <a md-button class="asbtn" (click)="registerEvt(sidenav)">
+      <md-icon>person_add</md-icon>
+      Register
+    </a>
+    <a md-button class="asbtn" (click)="logout()">
+      <md-icon>exit_to_app</md-icon>
+      Logout
+    </a>
+
+  </md-sidenav>
+
+</md-sidenav-container>
+
+
+
+
