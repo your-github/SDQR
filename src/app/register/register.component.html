@@ -19,9 +19,11 @@
         <input mdInput type="password" formControlName="password" [(ngModel)]="pass" placeholder="Password">
       </md-input-container>
       <md-input-container>
-        <input mdInput type="password" formControlName="confirm" id="confirm" [(ngModel)]="confirm" placeholder="Confirm password">
-        <!--<p class="ng-invalid">Password is not matched</p>-->
+        <input mdInput type="password" formControlName="confirm" [(ngModel)]="confirm" placeholder="Confirm password" (keyup)="checkPasswordMismatch()" >
       </md-input-container>
+      <div *ngIf="checkConfirmInputKeyup">
+        <p [style.color]="'red'" *ngIf="!passwordMismatch">Password doesn't match</p>
+      </div>
       <a md-fab (click)="clickpic()" style="background-color: #18FFFF;color: white;margin-bottom: 1rem">
         <md-icon>add_a_photo</md-icon>
       </a>

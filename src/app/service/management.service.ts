@@ -19,6 +19,16 @@ export class ManagementService {
     return catagories;
   }
 
+  getCheckUser(): any{
+    return new Promise((resolve, reject) => {
+      this.firebasedb.list('/dbook/permission').subscribe(token => {
+        resolve(token);
+      }, error => {
+        reject(error);
+      });
+    });
+  }
+
   getBooks(): FirebaseListObservable<any> {
     return this.db;
   }

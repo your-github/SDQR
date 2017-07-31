@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {UserService} from '../service/user.service';
-import {PasswordValidators} from 'ngx-validators';
 import {NotificationsService} from 'angular2-notifications';
 import {ManagementService} from '../service/management.service';
 
@@ -15,6 +14,8 @@ import {ManagementService} from '../service/management.service';
 export class RegisterComponent implements OnInit {
 
   fRegister: FormGroup;
+  passwordMismatch:boolean = false;
+  checkConfirmInputKeyup: boolean = false;
 
   userpic64: any;
   userpic: File;
@@ -48,7 +49,17 @@ export class RegisterComponent implements OnInit {
       ],
       'password': ['', Validators.required],
       'confirm': ['', Validators.required]
-    }, PasswordValidators.mismatchedPasswords('password', 'confirm'));
+    });
+  }
+
+  checkPasswordMismatch(){
+    this.checkConfirmInputKeyup = true;
+    const formValue = this.fRegister.value;
+    if(formValue.password == formValue.confirm){
+      this.passwordMismatch = true;
+    }else {
+      this.passwordMismatch = false;
+    }
   }
 
   ngOnInit() {
@@ -73,7 +84,7 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    if (this.fRegister.valid) {
+    if (this.fRegister.valid && this.passwordMismatch) {
       const user = this.fRegister.value;
       this.userService.register(user).then(success => {
         const userToken = success;

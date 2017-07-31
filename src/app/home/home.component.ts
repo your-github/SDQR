@@ -6,6 +6,7 @@ import {FirebaseListObservable} from 'angularfire2/database';
 import {Router} from '@angular/router';
 import {UserService} from '../service/user.service'
 import {GalleryService} from 'ng-gallery';
+import {edSecure} from '../service/encryption/secure';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,7 @@ export class HomeComponent implements OnInit {
   checkInsert = false;
   checkDetail = false;
   checkUpdate = false;
+  checkUserPermission = false;
 
   /*** form property */
   fInsert: FormGroup;
@@ -74,7 +76,8 @@ export class HomeComponent implements OnInit {
               private manageService: ManagementService,
               private router: Router,
               private  userService: UserService,
-              private gallery: GalleryService) {
+              private gallery: GalleryService,
+              private secure: edSecure) {
   }
 
   ngOnInit() {
@@ -82,6 +85,20 @@ export class HomeComponent implements OnInit {
     this.resizeWindows(winwidth);
     this.userService.getUser().subscribe(success => {
       this.userData = success[0];
+      this.manageService.getCheckUser().then((Tokens) => {
+        let userTokens = [];
+        let loginToken = this.secure.encrytionUser(localStorage.getItem('sdqrusersession'));
+        userTokens = Tokens;
+        for(let i=0; i<userTokens.length; i++){
+          if(userTokens[i].token == loginToken){
+            this.checkUserPermission = true;
+            break;
+          }
+          else {
+            console.log(userTokens[i].token == loginToken);
+          }
+        }
+      });
     }, error => {
       console.log(error);
     });

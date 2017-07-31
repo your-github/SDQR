@@ -22,7 +22,7 @@
       <md-icon>dashboard</md-icon>
       Report
     </a>
-    <a md-button class="asbtn" (click)="registerEvt(sidenav)">
+    <a md-button class="asbtn" (click)="registerEvt(sidenav)" *ngIf="checkUserPermission">
       <md-icon>person_add</md-icon>
       Register
     </a>
@@ -239,7 +239,7 @@
                 <md-icon>settings</md-icon>
                 Update
               </button>
-              <button md-raised-button style="background-color:#D50000;color: white" (click)="deleteBook()">
+              <button md-raised-button style="background-color:#D50000;color: white" (click)="deleteBook()" *ngIf="checkUserPermission">
                 <md-icon>delete_forever</md-icon>
                 Delete
               </button>

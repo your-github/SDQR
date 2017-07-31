@@ -32,7 +32,7 @@ export class LoginComponent {
         '',
         [
           Validators.required,
-          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')
+          Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')
         ]
       ],
       password: ['', Validators.required]
@@ -44,7 +44,6 @@ export class LoginComponent {
       this.userService.login(this.fLogin.value)
         .then((succes) => {
           if (succes) {
-            this.notification.success('Login', 'ເຂົ້າສູ່ລະບົບສຳເລັດ', this.loginOpton);
             this.router.navigate(['home']);
           } else {
             this.notification.error('Login', 'ເຂົ້າສູ່ລະບົບລົ້ມເຫຼວ', this.loginOpton);
