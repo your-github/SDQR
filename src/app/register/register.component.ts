@@ -94,9 +94,7 @@ export class RegisterComponent implements OnInit {
           lname: user.lname
         }
         this.userService.saveUser(userPost, userToken).then(saveSuccess => {
-          console.log(saveSuccess);
           const key = saveSuccess.path.o[saveSuccess.path.o.length - 1];
-          console.log(key);
           if (this.userpic) {
             this.managerService.uploadPicture('/dbook/users/', key, this.userpic).then(picSuccess => {
               const userpicUrl = picSuccess.downloadURL;
@@ -108,7 +106,6 @@ export class RegisterComponent implements OnInit {
               }).catch(uError => {
                 this.userpic = null;
                 this.userpic64 = null;
-                console.log(uError);
               })
             }).catch(picError => {
               this.userpic = null;
@@ -117,13 +114,11 @@ export class RegisterComponent implements OnInit {
             })
           }
         }).catch(saveError => {
-          /*this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ສຳເລັດແລ້ວ', this.toastOpton)*/
-          console.log(saveError);
+          this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ສຳເລັດແລ້ວ', this.toastOpton);
         })
         console.log(success);
       }).catch(error => {
-        this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ລົ້ມເຫຼວ', this.toastOpton)
-        console.log(error);
+        this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ລົ້ມເຫຼວ', this.toastOpton);
       });
     }
   }

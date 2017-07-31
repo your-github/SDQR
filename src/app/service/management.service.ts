@@ -38,7 +38,6 @@ export class ManagementService {
     return this.db.push(data).then((success) => {
       return success;
     }).catch((error) => {
-      console.log(error)
       return false;
     });
   }
@@ -48,7 +47,6 @@ export class ManagementService {
     return firebaseStorage.child(path + key + '/' + file.name).put(file).then(success => {
       return success;
     }).catch(fError => {
-      console.log(fError);
       return false;
     })
   }
@@ -59,7 +57,6 @@ export class ManagementService {
     return this.db.update(key, data).then((success) => {
       return true;
     }).catch((error) => {
-      console.log(error)
       return false;
     });
   }

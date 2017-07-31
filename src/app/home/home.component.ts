@@ -99,18 +99,12 @@ export class HomeComponent implements OnInit {
           }
         }
       });
-    }, error => {
-      console.log(error);
     });
     this.manageService.getCategories().subscribe(success => {
       this.categories = success;
-    }, error => {
-      console.log(error);
     });
     this.manageService.getBooks().subscribe(success => {
       this.books = success;
-    }, error => {
-      console.log(error);
     });
   }
 
@@ -221,12 +215,10 @@ export class HomeComponent implements OnInit {
                 }).catch(uError => {
                   this.successMessage();
                   this.fInsert.reset();
-                  console.log(uError)
                 })
               }).catch(bError => {
                 this.successMessage();
                 this.fInsert.reset();
-                console.log(bError);
               })
             } else {
               this.manageService.updateBook(keypath, {fpic: frontpic, bpic: null}).then(uSuccess => {
@@ -235,13 +227,11 @@ export class HomeComponent implements OnInit {
               }).catch(uError => {
                 this.successMessage();
                 this.fInsert.reset();
-                console.log(uError)
               })
             }
           }).catch(fError => {
             this.successMessage();
             this.fInsert.reset();
-            console.log(fError);
           })
         } else {
           this.successMessage();
@@ -249,7 +239,6 @@ export class HomeComponent implements OnInit {
         }
       }).catch(error => {
         this.notification.error('Insert', 'ບັນທຶກຂໍ້ມູນລົ້ມເຫຼວ', this.toastOpton);
-        console.log(error);
       });
     }
   }
@@ -316,30 +305,25 @@ export class HomeComponent implements OnInit {
                   this.updateSuccess();
                 }).catch(uError => {
                   this.updateSuccess();
-                  console.log(uError)
-                })
+                });
               }).catch(bError => {
                 this.updateSuccess();
-                console.log(bError);
-              })
+              });
             } else {
               this.manageService.updateBook(this.bDetail.key, {fpic: frontpic, bpic: null}).then(uSuccess => {
                 this.updateSuccess();
               }).catch(uError => {
                 this.updateSuccess();
-                console.log(uError)
-              })
+              });
             }
           }).catch(fError => {
             this.updateSuccess();
-            console.log(fError);
-          })
+          });
         } else {
           this.updateSuccess();
         }
       }).catch(error => {
         this.notification.error('Update', 'ເກີດຂໍ້ຜິດພາດແກ້ໄຂຂໍ້ມູນລົ້ມເຫຼວ', this.toastOpton);
-        console.log(error);
       })
     }
   }
@@ -365,7 +349,6 @@ export class HomeComponent implements OnInit {
       this.checkDetail = false;
     }).catch(error => {
       this.notification.error('Delete', 'ເກີດຂໍ້ຜິດພາດລົບຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
-      console.log(error);
     })
   }
 
@@ -379,7 +362,6 @@ export class HomeComponent implements OnInit {
       }
     }).catch(error => {
       this.notification.error('Log out', 'ອອກຈາກລະບົບລົ້ມເຫຼວ', this.toastOpton);
-      console.log(error);
     })
   }
   currenCategory(catename){

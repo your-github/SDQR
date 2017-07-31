@@ -34,7 +34,6 @@ export class UserService {
         const registertoken = success.uid + success.m;
         return registertoken;
       }).catch((error) => {
-        console.log(error);
         return false;
       });
   }
@@ -44,7 +43,6 @@ export class UserService {
     return userdb.push(userData).then(succ => {
       return succ;
     }).catch(err => {
-      console.log(err);
       return false;
     });
   }
@@ -68,7 +66,6 @@ export class UserService {
       localStorage.setItem('sdqrusersession', token);
       return true;
     }).catch((err) => {
-      console.log(err);
       return false;
     });
   }
