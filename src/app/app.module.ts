@@ -48,7 +48,9 @@ import {GalleryConfig, GalleryModule} from 'ng-gallery';
 /*** Qrcode*/
 import { QRCodeModule } from 'angular2-qrcode';
 
-
+/** Loading Bar */
+import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
+import { LoadersCssModule } from 'angular2-loaders-css';
 
 export const galleryConfig: GalleryConfig = {
 
@@ -124,6 +126,7 @@ export const firebaseConfig = {
     MdSlideToggleModule,
     MdSelectModule,
     MdTabsModule,
+    //MdDialogModule,
     FlexLayoutModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
@@ -132,8 +135,9 @@ export const firebaseConfig = {
     SimpleNotificationsModule.forRoot(),
     appRoutes,
     GalleryModule.forRoot(galleryConfig),
-    QRCodeModule
-
+    QRCodeModule,
+    SlimLoadingBarModule.forRoot(),
+    LoadersCssModule
   ],
   providers: [edSecure, LoginSecureService, ShareSecureService, UserService],
   bootstrap: [AppComponent]

@@ -106,7 +106,6 @@
     <md-card *ngIf="!checkInsert">
       <form>
         <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
-
           <md-select placeholder="Category" fxFlex="20">
             <md-option value="food">
               ນິຍາຍ
@@ -277,5 +276,13 @@
   </button>
 </div>
 
+<div class="overlay" *ngIf="checkSavedInfo">
+  <span class="showLoader">
+    <loaders-css [loader]="'line-scale'" [loaderClass]="'my-loader'"></loaders-css>
+    Saving...
+  </span>
+</div>
+
 
 <simple-notifications [options]="toastOpton"></simple-notifications>
+<ng2-slim-loading-bar [color]="'red'" [height]="'4px'"></ng2-slim-loading-bar>

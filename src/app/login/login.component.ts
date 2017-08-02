@@ -11,6 +11,7 @@ import {Router} from '@angular/router';
 })
 export class LoginComponent {
   fLogin: FormGroup;
+  checkSubmit = true;
 
   loginOpton = {
     timeOut: 3000,
@@ -41,8 +42,10 @@ export class LoginComponent {
 
   doLogin() {
     if (this.fLogin.valid) {
+      this.checkSubmit = false;
       this.userService.login(this.fLogin.value)
         .then((succes) => {
+          this.checkSubmit = true;
           if (succes) {
             this.router.navigate(['home']);
           } else {
@@ -50,6 +53,7 @@ export class LoginComponent {
             this.fLogin.reset();
           }
         }).catch(() => {
+        this.checkSubmit = true;
         this.notification.error('Login', 'ເຂົ້າສູ່ລະບົບລົ້ມເຫຼວ', this.loginOpton);
         this.fLogin.reset();
       });

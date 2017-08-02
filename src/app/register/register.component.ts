@@ -94,30 +94,34 @@ export class RegisterComponent implements OnInit {
           lname: user.lname
         }
         this.userService.saveUser(userPost, userToken).then(saveSuccess => {
+          this.passwordMismatch = false;
+          this.checkConfirmInputKeyup = false;
           const key = saveSuccess.path.o[saveSuccess.path.o.length - 1];
           if (this.userpic) {
             this.managerService.uploadPicture('/dbook/users/', key, this.userpic).then(picSuccess => {
               const userpicUrl = picSuccess.downloadURL;
               this.userService.updateUser(key, {upic: userpicUrl}, userToken).then(uSuccess => {
-                this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ສຳເລັດແລ້ວ', this.toastOpton)
+                this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ສຳເລັດແລ້ວ', this.toastOpton);
                 this.userpic = null;
                 this.userpic64 = null;
                 this.fRegister.reset();
-              }).catch(uError => {
+              }).catch(() => {
+                this.notification.warn('User', 'ບັນທຶກຮູບຫຼົ້ມເຫຼວ', this.toastOpton);
                 this.userpic = null;
                 this.userpic64 = null;
-              })
-            }).catch(picError => {
+                this.fRegister.reset();
+              });
+            }).catch(() => {
+              this.notification.warn('User', 'ບັນທຶກຮູບຫຼົ້ມເຫຼວ', this.toastOpton);
               this.userpic = null;
               this.userpic64 = null;
-              console.log(picError);
-            })
+              this.fRegister.reset();
+            });
           }
-        }).catch(saveError => {
+        }).catch(() => {
           this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ສຳເລັດແລ້ວ', this.toastOpton);
-        })
-        console.log(success);
-      }).catch(error => {
+        });
+      }).catch(() => {
         this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ລົ້ມເຫຼວ', this.toastOpton);
       });
     }

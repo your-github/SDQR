@@ -48,7 +48,6 @@ md-grid-tile {
     background-color: #00E5FF;
 }
 
-
 /*Show Product detail*/
 .showpic {
 
@@ -84,4 +83,23 @@ md-tab-group{
 md-input-container {
   width: 100%;
   margin: 0.5rem;
+}
+
+
+.overlay{
+  opacity: .5;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background: #ffffff;
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+}
+
+.showLoader{
+  position: absolute;
+  top: 50%;
+  right: 49%;
+  z-index: 99999;
 }

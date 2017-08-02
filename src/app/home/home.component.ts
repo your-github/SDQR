@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {UserService} from '../service/user.service'
 import {GalleryService} from 'ng-gallery';
 import {edSecure} from '../service/encryption/secure';
+import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-home',
@@ -25,6 +26,7 @@ export class HomeComponent implements OnInit {
   checkDetail = false;
   checkUpdate = false;
   checkUserPermission = false;
+  checkSavedInfo = false;
 
   /*** form property */
   fInsert: FormGroup;
@@ -77,7 +79,8 @@ export class HomeComponent implements OnInit {
               private router: Router,
               private  userService: UserService,
               private gallery: GalleryService,
-              private secure: edSecure) {
+              private secure: edSecure,
+              private slimLoadingBarService: SlimLoadingBarService) {
   }
 
   ngOnInit() {
@@ -94,16 +97,18 @@ export class HomeComponent implements OnInit {
             this.checkUserPermission = true;
             break;
           }
-          else {
-            console.log(userTokens[i].token == loginToken);
-          }
         }
       });
     });
     this.manageService.getCategories().subscribe(success => {
       this.categories = success;
     });
+
+    this.slimLoadingBarService.start(() => {
+      console.log("Laoding book complete");
+    });
     this.manageService.getBooks().subscribe(success => {
+      this.slimLoadingBarService.complete();
       this.books = success;
     });
   }
@@ -199,6 +204,7 @@ export class HomeComponent implements OnInit {
 
   saveBook() {
     if (this.fInsert.valid) {
+      this.checkSavedInfo = true;
       const book = this.fInsert.value;
       book.category_name = this.catename;
       this.manageService.saveBook(book).then(success => {
@@ -211,40 +217,48 @@ export class HomeComponent implements OnInit {
                 const backpic = bSuccess.downloadURL;
                 this.manageService.updateBook(keypath, {fpic: frontpic, bpic: backpic}).then(uSuccess => {
                   this.successMessage();
+                  this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
                   this.fInsert.reset();
-                }).catch(uError => {
+                }).catch(() => {
                   this.successMessage();
+                  this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
                   this.fInsert.reset();
                 })
-              }).catch(bError => {
+              }).catch(() => {
                 this.successMessage();
+                this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
                 this.fInsert.reset();
               })
             } else {
               this.manageService.updateBook(keypath, {fpic: frontpic, bpic: null}).then(uSuccess => {
                 this.successMessage();
+                this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
                 this.fInsert.reset();
-              }).catch(uError => {
+              }).catch(() => {
                 this.successMessage();
+                this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
                 this.fInsert.reset();
               })
             }
-          }).catch(fError => {
+          }).catch(() => {
             this.successMessage();
+            this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
             this.fInsert.reset();
           })
         } else {
           this.successMessage();
+          this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
           this.fInsert.reset();
         }
-      }).catch(error => {
+      }).catch(() => {
+        this.checkSavedInfo = false;
         this.notification.error('Insert', 'ບັນທຶກຂໍ້ມູນລົ້ມເຫຼວ', this.toastOpton);
       });
     }
   }
 
   successMessage() {
-    this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
+    this.checkSavedInfo = false;
     this.frontpic64 = null;
     this.fpic = null;
     this.backpic64 = null;
@@ -288,7 +302,7 @@ export class HomeComponent implements OnInit {
 
   updateBook() {
     if (this.fUpdate.valid) {
-
+      this.checkSavedInfo = true;
       const book = this.fUpdate.value;
       /*book.fpic = this.frontpic64 ? this.frontpic64 : this.bDetail.bd.fpic;
        book.bpic = this.backpic64 ? this.backpic64 : this.bDetail.bd.bpic;*/
@@ -303,33 +317,41 @@ export class HomeComponent implements OnInit {
                 const backpic = bSuccess.downloadURL;
                 this.manageService.updateBook(this.bDetail.key, {fpic: frontpic, bpic: backpic}).then(uSuccess => {
                   this.updateSuccess();
-                }).catch(uError => {
+                  this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
+                }).catch(() => {
                   this.updateSuccess();
+                  this.notification.success('Update', 'ແກ້ໄຂຮູບລົ້ມເຫຼວ', this.toastOpton);
                 });
-              }).catch(bError => {
+              }).catch(() => {
                 this.updateSuccess();
+                this.notification.success('Update', 'ແກ້ໄຂຮູບລົ້ມເຫຼວ', this.toastOpton);
               });
             } else {
               this.manageService.updateBook(this.bDetail.key, {fpic: frontpic, bpic: null}).then(uSuccess => {
                 this.updateSuccess();
-              }).catch(uError => {
+                this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
+              }).catch(() => {
                 this.updateSuccess();
+                this.notification.success('Update', 'ແກ້ໄຂຮູບລົ້ມເຫຼວ', this.toastOpton);
               });
             }
-          }).catch(fError => {
+          }).catch(() => {
             this.updateSuccess();
+            this.notification.success('Update', 'ແກ້ໄຂຮູບລົ້ມເຫຼວ', this.toastOpton);
           });
         } else {
           this.updateSuccess();
+          this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
         }
-      }).catch(error => {
+      }).catch(() => {
+        this.checkSavedInfo = false;
         this.notification.error('Update', 'ເກີດຂໍ້ຜິດພາດແກ້ໄຂຂໍ້ມູນລົ້ມເຫຼວ', this.toastOpton);
       })
     }
   }
 
   updateSuccess() {
-    this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
+    this.checkSavedInfo = false;
     this.frontpic64 = null;
     this.fpic = null;
     this.backpic64 = null;
@@ -347,7 +369,7 @@ export class HomeComponent implements OnInit {
       this.bpic = null;
       this.checkUpdate = false;
       this.checkDetail = false;
-    }).catch(error => {
+    }).catch(() => {
       this.notification.error('Delete', 'ເກີດຂໍ້ຜິດພາດລົບຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
     })
   }
@@ -360,7 +382,7 @@ export class HomeComponent implements OnInit {
       } else {
         this.notification.error('Log out', 'ອອກຈາກລະບົບລົ້ມເຫຼວ', this.toastOpton);
       }
-    }).catch(error => {
+    }).catch(() => {
       this.notification.error('Log out', 'ອອກຈາກລະບົບລົ້ມເຫຼວ', this.toastOpton);
     })
   }
