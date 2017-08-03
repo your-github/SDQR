@@ -367,7 +367,7 @@ export class HomeComponent implements OnInit {
                     this.notification.success('Update', 'ແກ້ໄຂຮູບລົ້ມເຫຼວ', this.toastOpton);
                   });
                 } else {
-                  this.manageService.updateBook(this.bDetail.key, {fpic: frontpic, bpic: null}).then(uSuccess => {
+                  this.manageService.updateBook(this.bDetail.key, {fpic: frontpic}).then(uSuccess => {
                     this.updateSuccess();
                     this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
                   }).catch(() => {
@@ -382,7 +382,7 @@ export class HomeComponent implements OnInit {
             } else if (this.bpic) {
               this.manageService.uploadPicture('/dbook/books/', this.bDetail.key, this.bpic).then(bSuccess => {
                 const backpic = bSuccess.downloadURL;
-                this.manageService.updateBook(this.bDetail.key, {fpic: null, bpic: backpic}).then(uSuccess => {
+                this.manageService.updateBook(this.bDetail.key, {bpic: backpic}).then(uSuccess => {
                   this.updateSuccess();
                   this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
                 }).catch(() => {
