@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
   fRegister: FormGroup;
   passwordMismatch:boolean = false;
   checkConfirmInputKeyup: boolean = false;
+  checkSavedInfo: boolean = false;
 
   userpic64: any;
   userpic: File;
@@ -37,6 +38,7 @@ export class RegisterComponent implements OnInit {
               private userService: UserService,
               private notification: NotificationsService,
               private managerService: ManagementService) {
+
     this.fRegister = formBuild.group({
       'fname': ['', Validators.required],
       'lname': ['', Validators.required],
@@ -44,7 +46,7 @@ export class RegisterComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')
+          Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')
         ]
       ],
       'password': ['', Validators.required],
@@ -85,6 +87,7 @@ export class RegisterComponent implements OnInit {
 
   register() {
     if (this.fRegister.valid && this.passwordMismatch) {
+      this.checkSavedInfo = true;
       const user = this.fRegister.value;
       this.userService.register(user).then(success => {
         const userToken = success;
@@ -102,26 +105,31 @@ export class RegisterComponent implements OnInit {
               const userpicUrl = picSuccess.downloadURL;
               this.userService.updateUser(key, {upic: userpicUrl}, userToken).then(uSuccess => {
                 this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ສຳເລັດແລ້ວ', this.toastOpton);
+                this.checkSavedInfo = false;
                 this.userpic = null;
                 this.userpic64 = null;
                 this.fRegister.reset();
               }).catch(() => {
                 this.notification.warn('User', 'ບັນທຶກຮູບຫຼົ້ມເຫຼວ', this.toastOpton);
+                this.checkSavedInfo = false;
                 this.userpic = null;
                 this.userpic64 = null;
                 this.fRegister.reset();
               });
             }).catch(() => {
               this.notification.warn('User', 'ບັນທຶກຮູບຫຼົ້ມເຫຼວ', this.toastOpton);
+              this.checkSavedInfo = false;
               this.userpic = null;
               this.userpic64 = null;
               this.fRegister.reset();
             });
           }
         }).catch(() => {
+          this.checkSavedInfo = false;
           this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ສຳເລັດແລ້ວ', this.toastOpton);
         });
       }).catch(() => {
+        this.checkSavedInfo = false;
         this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ລົ້ມເຫຼວ', this.toastOpton);
       });
     }

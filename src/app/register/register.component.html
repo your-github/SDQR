@@ -36,4 +36,11 @@
   </div>
 </form>
 
+<div class="overlay" *ngIf="checkSavedInfo">
+  <span class="showLoader">
+    <loaders-css [loader]="'line-scale'" [loaderClass]="'my-loader'"></loaders-css>
+    Registering...
+  </span>
+</div>
+
 <simple-notifications [options]="toastOpton"></simple-notifications>
