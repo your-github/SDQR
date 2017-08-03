@@ -235,14 +235,14 @@ export class HomeComponent implements OnInit {
                       this.successMessage();
                       this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
                       this.fInsert.reset();
-                    })
+                    });
                   }).catch(() => {
                     this.successMessage();
                     this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
                     this.fInsert.reset();
-                  })
+                  });
                 } else {
-                  this.manageService.updateBook(keypath, {fpic: frontpic, bpic: null}).then(uSuccess => {
+                  this.manageService.updateBook(keypath, {fpic: frontpic}).then(uSuccess => {
                     this.successMessage();
                     this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
                     this.fInsert.reset();
@@ -250,17 +250,17 @@ export class HomeComponent implements OnInit {
                     this.successMessage();
                     this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
                     this.fInsert.reset();
-                  })
+                  });
                 }
               }).catch(() => {
                 this.successMessage();
                 this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
                 this.fInsert.reset();
-              })
+              });
             } else if (this.bpic) {
               this.manageService.uploadPicture('/dbook/books/', keypath, this.bpic).then(bSuccess => {
                 const backpic = bSuccess.downloadURL;
-                this.manageService.updateBook(keypath, {fpic: null, bpic: backpic}).then(uSuccess => {
+                this.manageService.updateBook(keypath, {bpic: backpic}).then(uSuccess => {
                   this.successMessage();
                   this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
                   this.fInsert.reset();
@@ -268,12 +268,12 @@ export class HomeComponent implements OnInit {
                   this.successMessage();
                   this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
                   this.fInsert.reset();
-                })
+                });
               }).catch(() => {
                 this.successMessage();
                 this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
                 this.fInsert.reset();
-              })
+              });
             } else {
               this.successMessage();
               this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
