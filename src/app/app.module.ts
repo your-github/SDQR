@@ -37,6 +37,7 @@ import {HomeComponent} from './home/home.component';
 import {UserService} from './service/user.service';
 import { QrCodeComponent } from './home/qr-code/qr-code.component';
 import { ReportComponent } from './report/report.component';
+import { ConfirmComponent } from './confirm/confirm.component';
 
 /*** Router*/
 
@@ -106,6 +107,7 @@ export const firebaseConfig = {
     HomeComponent,
     QrCodeComponent,
     ReportComponent,
+    ConfirmComponent,
   ],
   imports: [
     BrowserModule,
@@ -138,6 +140,9 @@ export const firebaseConfig = {
     QRCodeModule,
     SlimLoadingBarModule.forRoot(),
     LoadersCssModule
+  ],
+  entryComponents: [
+    ConfirmComponent
   ],
   providers: [edSecure, LoginSecureService, ShareSecureService, UserService],
   bootstrap: [AppComponent]

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { MdDialogRef, MdDialog } from '@angular/material';
 import {NotificationsService} from 'angular2-notifications';
 import {ManagementService} from '../service/management.service';
 import {FirebaseListObservable} from 'angularfire2/database';
@@ -8,6 +9,7 @@ import {UserService} from '../service/user.service'
 import {GalleryService} from 'ng-gallery';
 import {edSecure} from '../service/encryption/secure';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import {ConfirmComponent} from '../confirm/confirm.component';
 
 @Component({
   selector: 'app-home',
@@ -80,7 +82,8 @@ export class HomeComponent implements OnInit {
               private  userService: UserService,
               private gallery: GalleryService,
               private secure: edSecure,
-              private slimLoadingBarService: SlimLoadingBarService) {
+              private slimLoadingBarService: SlimLoadingBarService,
+              private dialog: MdDialog) {
   }
 
   ngOnInit() {
@@ -204,55 +207,66 @@ export class HomeComponent implements OnInit {
 
   saveBook() {
     if (this.fInsert.valid) {
-      this.checkSavedInfo = true;
-      const book = this.fInsert.value;
-      book.category_name = this.catename;
-      this.manageService.saveBook(book).then(success => {
-        const keypath = success.path.o[success.path.o.length - 1];
-        if (this.fpic) {
-          this.manageService.uploadPicture('/dbook/books/', keypath, this.fpic).then(fSuccess => {
-            const frontpic = fSuccess.downloadURL;
-            if (this.bpic) {
-              this.manageService.uploadPicture('/dbook/books/', keypath, this.bpic).then(bSuccess => {
-                const backpic = bSuccess.downloadURL;
-                this.manageService.updateBook(keypath, {fpic: frontpic, bpic: backpic}).then(uSuccess => {
-                  this.successMessage();
-                  this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
-                  this.fInsert.reset();
-                }).catch(() => {
-                  this.successMessage();
-                  this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
-                  this.fInsert.reset();
-                })
+      let dialogRef: MdDialogRef<ConfirmComponent>;
+      dialogRef = this.dialog.open(ConfirmComponent, {
+        height: '170px',
+        width: '225px',
+      });
+      dialogRef.componentInstance.title = "Save Book";
+      dialogRef.componentInstance.message = "Are you sure?";
+      dialogRef.afterClosed().subscribe(confirm => {
+        if(confirm){
+          this.checkSavedInfo = true;
+          const book = this.fInsert.value;
+          book.category_name = this.catename;
+          this.manageService.saveBook(book).then(success => {
+            const keypath = success.path.o[success.path.o.length - 1];
+            if (this.fpic) {
+              this.manageService.uploadPicture('/dbook/books/', keypath, this.fpic).then(fSuccess => {
+                const frontpic = fSuccess.downloadURL;
+                if (this.bpic) {
+                  this.manageService.uploadPicture('/dbook/books/', keypath, this.bpic).then(bSuccess => {
+                    const backpic = bSuccess.downloadURL;
+                    this.manageService.updateBook(keypath, {fpic: frontpic, bpic: backpic}).then(uSuccess => {
+                      this.successMessage();
+                      this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
+                      this.fInsert.reset();
+                    }).catch(() => {
+                      this.successMessage();
+                      this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
+                      this.fInsert.reset();
+                    })
+                  }).catch(() => {
+                    this.successMessage();
+                    this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
+                    this.fInsert.reset();
+                  })
+                } else {
+                  this.manageService.updateBook(keypath, {fpic: frontpic, bpic: null}).then(uSuccess => {
+                    this.successMessage();
+                    this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
+                    this.fInsert.reset();
+                  }).catch(() => {
+                    this.successMessage();
+                    this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
+                    this.fInsert.reset();
+                  })
+                }
               }).catch(() => {
                 this.successMessage();
                 this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
                 this.fInsert.reset();
               })
             } else {
-              this.manageService.updateBook(keypath, {fpic: frontpic, bpic: null}).then(uSuccess => {
-                this.successMessage();
-                this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
-                this.fInsert.reset();
-              }).catch(() => {
-                this.successMessage();
-                this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
-                this.fInsert.reset();
-              })
+              this.successMessage();
+              this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
+              this.fInsert.reset();
             }
           }).catch(() => {
-            this.successMessage();
-            this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
-            this.fInsert.reset();
-          })
-        } else {
-          this.successMessage();
-          this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
-          this.fInsert.reset();
+            this.checkSavedInfo = false;
+            this.notification.error('Insert', 'ບັນທຶກຂໍ້ມູນລົ້ມເຫຼວ', this.toastOpton);
+          });
         }
-      }).catch(() => {
-        this.checkSavedInfo = false;
-        this.notification.error('Insert', 'ບັນທຶກຂໍ້ມູນລົ້ມເຫຼວ', this.toastOpton);
       });
     }
   }
@@ -302,51 +316,62 @@ export class HomeComponent implements OnInit {
 
   updateBook() {
     if (this.fUpdate.valid) {
-      this.checkSavedInfo = true;
-      const book = this.fUpdate.value;
-      /*book.fpic = this.frontpic64 ? this.frontpic64 : this.bDetail.bd.fpic;
-       book.bpic = this.backpic64 ? this.backpic64 : this.bDetail.bd.bpic;*/
-      book.category_name = this.catename;
-      console.log(book);
-      this.manageService.updateBook(this.bDetail.key, book).then(success => {
-        if (this.fpic) {
-          this.manageService.uploadPicture('/dbook/books/', this.bDetail.key, this.fpic).then(fSuccess => {
-            const frontpic = fSuccess.downloadURL;
-            if (this.bpic) {
-              this.manageService.uploadPicture('/dbook/books/', this.bDetail.key, this.bpic).then(bSuccess => {
-                const backpic = bSuccess.downloadURL;
-                this.manageService.updateBook(this.bDetail.key, {fpic: frontpic, bpic: backpic}).then(uSuccess => {
-                  this.updateSuccess();
-                  this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
-                }).catch(() => {
-                  this.updateSuccess();
-                  this.notification.success('Update', 'ແກ້ໄຂຮູບລົ້ມເຫຼວ', this.toastOpton);
-                });
+      let dialogRef: MdDialogRef<ConfirmComponent>;
+      dialogRef = this.dialog.open(ConfirmComponent, {
+        height: '170px',
+        width: '225px',
+      });
+      dialogRef.componentInstance.title = "Update Book";
+      dialogRef.componentInstance.message = "Are you sure?";
+      dialogRef.afterClosed().subscribe(confirm => {
+        if(confirm){
+          this.checkSavedInfo = true;
+          const book = this.fUpdate.value;
+          /*book.fpic = this.frontpic64 ? this.frontpic64 : this.bDetail.bd.fpic;
+           book.bpic = this.backpic64 ? this.backpic64 : this.bDetail.bd.bpic;*/
+          book.category_name = this.catename;
+          console.log(book);
+          this.manageService.updateBook(this.bDetail.key, book).then(success => {
+            if (this.fpic) {
+              this.manageService.uploadPicture('/dbook/books/', this.bDetail.key, this.fpic).then(fSuccess => {
+                const frontpic = fSuccess.downloadURL;
+                if (this.bpic) {
+                  this.manageService.uploadPicture('/dbook/books/', this.bDetail.key, this.bpic).then(bSuccess => {
+                    const backpic = bSuccess.downloadURL;
+                    this.manageService.updateBook(this.bDetail.key, {fpic: frontpic, bpic: backpic}).then(uSuccess => {
+                      this.updateSuccess();
+                      this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
+                    }).catch(() => {
+                      this.updateSuccess();
+                      this.notification.success('Update', 'ແກ້ໄຂຮູບລົ້ມເຫຼວ', this.toastOpton);
+                    });
+                  }).catch(() => {
+                    this.updateSuccess();
+                    this.notification.success('Update', 'ແກ້ໄຂຮູບລົ້ມເຫຼວ', this.toastOpton);
+                  });
+                } else {
+                  this.manageService.updateBook(this.bDetail.key, {fpic: frontpic, bpic: null}).then(uSuccess => {
+                    this.updateSuccess();
+                    this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
+                  }).catch(() => {
+                    this.updateSuccess();
+                    this.notification.success('Update', 'ແກ້ໄຂຮູບລົ້ມເຫຼວ', this.toastOpton);
+                  });
+                }
               }).catch(() => {
                 this.updateSuccess();
                 this.notification.success('Update', 'ແກ້ໄຂຮູບລົ້ມເຫຼວ', this.toastOpton);
               });
             } else {
-              this.manageService.updateBook(this.bDetail.key, {fpic: frontpic, bpic: null}).then(uSuccess => {
-                this.updateSuccess();
-                this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
-              }).catch(() => {
-                this.updateSuccess();
-                this.notification.success('Update', 'ແກ້ໄຂຮູບລົ້ມເຫຼວ', this.toastOpton);
-              });
+              this.updateSuccess();
+              this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
             }
           }).catch(() => {
-            this.updateSuccess();
-            this.notification.success('Update', 'ແກ້ໄຂຮູບລົ້ມເຫຼວ', this.toastOpton);
+            this.checkSavedInfo = false;
+            this.notification.error('Update', 'ເກີດຂໍ້ຜິດພາດແກ້ໄຂຂໍ້ມູນລົ້ມເຫຼວ', this.toastOpton);
           });
-        } else {
-          this.updateSuccess();
-          this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
         }
-      }).catch(() => {
-        this.checkSavedInfo = false;
-        this.notification.error('Update', 'ເກີດຂໍ້ຜິດພາດແກ້ໄຂຂໍ້ມູນລົ້ມເຫຼວ', this.toastOpton);
-      })
+      });
     }
   }
 
@@ -361,17 +386,28 @@ export class HomeComponent implements OnInit {
   }
 
   deleteBook() {
-    this.manageService.deleteBook(this.bDetail.key).then(success => {
-      this.notification.success('Delete', 'ລົບຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
-      this.frontpic64 = null;
-      this.fpic = null;
-      this.backpic64 = null;
-      this.bpic = null;
-      this.checkUpdate = false;
-      this.checkDetail = false;
-    }).catch(() => {
-      this.notification.error('Delete', 'ເກີດຂໍ້ຜິດພາດລົບຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
-    })
+    let dialogRef: MdDialogRef<ConfirmComponent>;
+    dialogRef = this.dialog.open(ConfirmComponent, {
+      height: '170px',
+      width: '225px',
+    });
+    dialogRef.componentInstance.title = "Delete Book";
+    dialogRef.componentInstance.message = "Are you sure?";
+    dialogRef.afterClosed().subscribe(confirm => {
+      if(confirm){
+        this.manageService.deleteBook(this.bDetail.key).then(success => {
+          this.notification.success('Delete', 'ລົບຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
+          this.frontpic64 = null;
+          this.fpic = null;
+          this.backpic64 = null;
+          this.bpic = null;
+          this.checkUpdate = false;
+          this.checkDetail = false;
+        }).catch(() => {
+          this.notification.error('Delete', 'ເກີດຂໍ້ຜິດພາດລົບຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
+        })
+      }
+    });
   }
 
   logout() {

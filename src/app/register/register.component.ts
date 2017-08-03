@@ -4,6 +4,8 @@ import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {UserService} from '../service/user.service';
 import {NotificationsService} from 'angular2-notifications';
 import {ManagementService} from '../service/management.service';
+import {MdDialog, MdDialogRef} from '@angular/material';
+import {ConfirmComponent} from "../confirm/confirm.component";
 
 @Component({
   selector: 'app-register',
@@ -37,7 +39,8 @@ export class RegisterComponent implements OnInit {
               private formBuild: FormBuilder,
               private userService: UserService,
               private notification: NotificationsService,
-              private managerService: ManagementService) {
+              private managerService: ManagementService,
+              private dialog: MdDialog) {
 
     this.fRegister = formBuild.group({
       'fname': ['', Validators.required],
@@ -87,50 +90,61 @@ export class RegisterComponent implements OnInit {
 
   register() {
     if (this.fRegister.valid && this.passwordMismatch) {
-      this.checkSavedInfo = true;
-      const user = this.fRegister.value;
-      this.userService.register(user).then(success => {
-        const userToken = success;
-        const userPost = {
-          email: user.email,
-          fname: user.fname,
-          lname: user.lname
-        }
-        this.userService.saveUser(userPost, userToken).then(saveSuccess => {
-          this.passwordMismatch = false;
-          this.checkConfirmInputKeyup = false;
-          const key = saveSuccess.path.o[saveSuccess.path.o.length - 1];
-          if (this.userpic) {
-            this.managerService.uploadPicture('/dbook/users/', key, this.userpic).then(picSuccess => {
-              const userpicUrl = picSuccess.downloadURL;
-              this.userService.updateUser(key, {upic: userpicUrl}, userToken).then(uSuccess => {
-                this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ສຳເລັດແລ້ວ', this.toastOpton);
-                this.checkSavedInfo = false;
-                this.userpic = null;
-                this.userpic64 = null;
-                this.fRegister.reset();
-              }).catch(() => {
-                this.notification.warn('User', 'ບັນທຶກຮູບຫຼົ້ມເຫຼວ', this.toastOpton);
-                this.checkSavedInfo = false;
-                this.userpic = null;
-                this.userpic64 = null;
-                this.fRegister.reset();
-              });
+      let dialogRef: MdDialogRef<ConfirmComponent>;
+      dialogRef = this.dialog.open(ConfirmComponent, {
+        height: '170px',
+        width: '225px',
+      });
+      dialogRef.componentInstance.title = "Register";
+      dialogRef.componentInstance.message = "Are you sure?";
+      dialogRef.afterClosed().subscribe(confirm => {
+        if(confirm){
+          this.checkSavedInfo = true;
+          const user = this.fRegister.value;
+          this.userService.register(user).then(success => {
+            const userToken = success;
+            const userPost = {
+              email: user.email,
+              fname: user.fname,
+              lname: user.lname
+            }
+            this.userService.saveUser(userPost, userToken).then(saveSuccess => {
+              this.passwordMismatch = false;
+              this.checkConfirmInputKeyup = false;
+              const key = saveSuccess.path.o[saveSuccess.path.o.length - 1];
+              if (this.userpic) {
+                this.managerService.uploadPicture('/dbook/users/', key, this.userpic).then(picSuccess => {
+                  const userpicUrl = picSuccess.downloadURL;
+                  this.userService.updateUser(key, {upic: userpicUrl}, userToken).then(uSuccess => {
+                    this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ສຳເລັດແລ້ວ', this.toastOpton);
+                    this.checkSavedInfo = false;
+                    this.userpic = null;
+                    this.userpic64 = null;
+                    this.fRegister.reset();
+                  }).catch(() => {
+                    this.notification.warn('User', 'ບັນທຶກຮູບຫຼົ້ມເຫຼວ', this.toastOpton);
+                    this.checkSavedInfo = false;
+                    this.userpic = null;
+                    this.userpic64 = null;
+                    this.fRegister.reset();
+                  });
+                }).catch(() => {
+                  this.notification.warn('User', 'ບັນທຶກຮູບຫຼົ້ມເຫຼວ', this.toastOpton);
+                  this.checkSavedInfo = false;
+                  this.userpic = null;
+                  this.userpic64 = null;
+                  this.fRegister.reset();
+                });
+              }
             }).catch(() => {
-              this.notification.warn('User', 'ບັນທຶກຮູບຫຼົ້ມເຫຼວ', this.toastOpton);
               this.checkSavedInfo = false;
-              this.userpic = null;
-              this.userpic64 = null;
-              this.fRegister.reset();
+              this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ສຳເລັດແລ້ວ', this.toastOpton);
             });
-          }
-        }).catch(() => {
-          this.checkSavedInfo = false;
-          this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ສຳເລັດແລ້ວ', this.toastOpton);
-        });
-      }).catch(() => {
-        this.checkSavedInfo = false;
-        this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ລົ້ມເຫຼວ', this.toastOpton);
+          }).catch(() => {
+            this.checkSavedInfo = false;
+            this.notification.success('User', 'ເພີ່ມຜູ້ໃຊ້ລົ້ມເຫຼວ', this.toastOpton);
+          });
+        }
       });
     }
   }
