@@ -257,6 +257,23 @@ export class HomeComponent implements OnInit {
                 this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
                 this.fInsert.reset();
               })
+            } else if (this.bpic) {
+              this.manageService.uploadPicture('/dbook/books/', keypath, this.bpic).then(bSuccess => {
+                const backpic = bSuccess.downloadURL;
+                this.manageService.updateBook(keypath, {fpic: null, bpic: backpic}).then(uSuccess => {
+                  this.successMessage();
+                  this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
+                  this.fInsert.reset();
+                }).catch(() => {
+                  this.successMessage();
+                  this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
+                  this.fInsert.reset();
+                })
+              }).catch(() => {
+                this.successMessage();
+                this.notification.warn('Insert', 'ບັນທຶກຮູບລົ້ມເຫຼວ', this.toastOpton);
+                this.fInsert.reset();
+              })
             } else {
               this.successMessage();
               this.notification.success('Insert', 'ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
@@ -362,7 +379,21 @@ export class HomeComponent implements OnInit {
                 this.updateSuccess();
                 this.notification.success('Update', 'ແກ້ໄຂຮູບລົ້ມເຫຼວ', this.toastOpton);
               });
-            } else {
+            } else if (this.bpic) {
+              this.manageService.uploadPicture('/dbook/books/', this.bDetail.key, this.bpic).then(bSuccess => {
+                const backpic = bSuccess.downloadURL;
+                this.manageService.updateBook(this.bDetail.key, {fpic: null, bpic: backpic}).then(uSuccess => {
+                  this.updateSuccess();
+                  this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
+                }).catch(() => {
+                  this.updateSuccess();
+                  this.notification.success('Update', 'ແກ້ໄຂຮູບລົ້ມເຫຼວ', this.toastOpton);
+                });
+              }).catch(() => {
+                this.updateSuccess();
+                this.notification.success('Update', 'ແກ້ໄຂຮູບລົ້ມເຫຼວ', this.toastOpton);
+              });
+            }else {
               this.updateSuccess();
               this.notification.success('Update', 'ແກ້ໄຂຂໍ້ມູນສຳເລັດແລ້ວ', this.toastOpton);
             }
