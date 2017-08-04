@@ -4,7 +4,7 @@ import { MdDialogRef } from '@angular/material';
 @Component({
   selector: 'app-confirm',
   template: `
-    <h2 md-dialog-title><strong>{{ title }}</strong></h2>
+    <h4 md-dialog-title><strong>{{ title }}</strong></h4>
     <md-dialog-content>{{ message }}</md-dialog-content>
     <md-dialog-actions>
       <button md-button md-dialog-close>No</button>

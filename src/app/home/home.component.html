@@ -163,7 +163,7 @@
           <form novalidate [formGroup]="fUpdate">
 
             <md-select formControlName="category" placeholder="Catagory">
-              <md-option value="{{category.$key}}" *ngFor="let category of categories">{{category.name}}</md-option>
+              <md-option value="{{category.$key}}" *ngFor="let category of categories" (click)="currenCategory(category.name)">{{category.name}}</md-option>
             </md-select>
 
             <md-input-container>

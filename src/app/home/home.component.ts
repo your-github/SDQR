@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit {
   backpic64: any;
   bpic: File;
   catename: string;
+  cateKey: string;
 
   /** Users */
   userData: { email: string, fname: string, lname: string, upic?: string };
@@ -294,6 +295,7 @@ export class HomeComponent implements OnInit {
     this.fpic = null;
     this.backpic64 = null;
     this.bpic = null;
+    this.catename = null;
   }
 
   bookDetail(key, book) {
@@ -319,6 +321,7 @@ export class HomeComponent implements OnInit {
     this.fpic = null;
     this.backpic64 = null;
     this.bpic = null;
+    this.catename = this.bDetail.bd.category_name;
     this.fUpdate = this.formBuilder.group({
       category: [this.bDetail.bd.category, Validators.required],
       author: [this.bDetail.bd.author, Validators.required],
@@ -347,7 +350,6 @@ export class HomeComponent implements OnInit {
           /*book.fpic = this.frontpic64 ? this.frontpic64 : this.bDetail.bd.fpic;
            book.bpic = this.backpic64 ? this.backpic64 : this.bDetail.bd.bpic;*/
           book.category_name = this.catename;
-          console.log(book);
           this.manageService.updateBook(this.bDetail.key, book).then(success => {
             if (this.fpic) {
               this.manageService.uploadPicture('/dbook/books/', this.bDetail.key, this.fpic).then(fSuccess => {
@@ -414,6 +416,7 @@ export class HomeComponent implements OnInit {
     this.bpic = null;
     this.checkUpdate = false;
     this.checkDetail = false;
+    this.catename = null;
   }
 
   deleteBook() {

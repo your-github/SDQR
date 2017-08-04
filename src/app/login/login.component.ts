@@ -3,7 +3,6 @@ import {UserService} from '../service/user.service'
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NotificationsService} from 'angular2-notifications';
 import {Router} from '@angular/router';
-import {ConfirmComponent} from '../confirm/confirm.component';
 
 @Component({
   selector: 'app-login',
