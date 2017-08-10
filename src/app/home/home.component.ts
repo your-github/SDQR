@@ -29,6 +29,8 @@ export class HomeComponent implements OnInit {
   checkUpdate = false;
   checkUserPermission = false;
   checkSavedInfo = false;
+  checkRefresh = false;
+  checkLoadMore = false;
 
   /*** form property */
   fInsert: FormGroup;
@@ -40,8 +42,9 @@ export class HomeComponent implements OnInit {
   backpic64: any;
   bpic: File;
   catename: string;
-  cateKey: string;
-
+  cateSearch: string = 'all';
+  bookSearch: string = '';
+  limited: number = 12;
   /** Users */
   userData: { email: string, fname: string, lname: string, upic?: string };
 
@@ -108,12 +111,19 @@ export class HomeComponent implements OnInit {
       this.categories = success;
     });
 
-    this.slimLoadingBarService.start(() => {
-      console.log("Laoding book complete");
-    });
-    this.manageService.getBooks().subscribe(success => {
+    this.slimLoadingBarService.start(() => {});
+    setTimeout(() => {
+      this.slimLoadingBarService.stop();
+    }, 25800);
+    this.manageService.getBooks(this.limited).subscribe(success => {
       this.slimLoadingBarService.complete();
+      this.checkLoadMore = true;
       this.books = success;
+      if(success.length < this.limited){
+        this.checkLoadMore = false;
+      }else{
+        this.checkLoadMore = true;
+      }
     });
   }
 
@@ -459,4 +469,58 @@ export class HomeComponent implements OnInit {
   currenCategory(catename){
     this.catename = catename;
   }
+
+  categoriesSearch(categorySearchData){
+    this.limited = 12;
+    const cate = categorySearchData;
+    if(cate == 'all' || cate == ''){
+      this.manageService.getBooks(this.limited).subscribe(success => {
+        this.books = success;
+        if(success.length < this.limited){
+          this.checkLoadMore = false;
+        }else{
+          this.checkLoadMore = true;
+        }
+      });
+    }else{
+      this.manageService.cateSearch(cate, this.limited).subscribe(success => {
+        this.books = success;
+        if(success.length < this.limited){
+          this.checkLoadMore = false;
+        }else{
+          this.checkLoadMore = true;
+        }
+      });
+    }
+  }
+
+  loadMore(){
+    this.checkRefresh = true;
+    this.limited += 12;
+    if(this.cateSearch == 'all' || this.cateSearch == ''){
+      this.manageService.getBooks(this.limited).subscribe(success => {
+        this.checkRefresh = false;
+        this.books = success;
+        if(success.length < this.limited){
+          this.checkLoadMore = false;
+        }else{
+          this.checkLoadMore = true;
+        }
+      });
+    }else{
+      this.manageService.cateSearch(this.cateSearch, this.limited).subscribe(success => {
+        this.books = success;
+        this.checkRefresh = false;
+        if(success.length < this.limited){
+          this.checkLoadMore = false;
+        }else{
+          this.checkLoadMore = true;
+        }
+      });
+    }
+    /*setTimeout(()=>{
+      this.checkRefresh = false;
+    }, 10000);*/
+  }
+
 }

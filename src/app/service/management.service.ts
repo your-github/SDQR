@@ -29,8 +29,14 @@ export class ManagementService {
     });
   }
 
-  getBooks(): FirebaseListObservable<any> {
-    return this.db;
+  getBooks(limited: number): FirebaseListObservable<any> {
+    const allBooks = this.firebasedb.list('/dbook/books',{
+      query: {
+        orderByKey: true,
+        limitToFirst: limited
+      }
+    });
+    return allBooks;
   }
 
   saveBook(_data) {
@@ -70,4 +76,14 @@ export class ManagementService {
     });
   }
 
+  cateSearch(cateID: string, limited: number): FirebaseListObservable<any> {
+    const searchCategory = this.firebasedb.list('/dbook/books', {
+      query: {
+        orderByChild: 'category',
+        limitToFirst: limited,
+        equalTo: cateID
+      }
+    });
+    return searchCategory;
+  }
 }

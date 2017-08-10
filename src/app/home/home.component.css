@@ -85,6 +85,15 @@ md-input-container {
   margin: 0.5rem;
 }
 
+.divRefresh{
+  margin-top: 3rem;
+  margin-buttom: 5rem;
+  text-align: center;
+}
+
+.refresh{
+  font-size: 25px;
+}
 
 .overlay{
   opacity: .5;

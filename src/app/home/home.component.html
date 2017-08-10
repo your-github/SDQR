@@ -104,26 +104,21 @@
 
     <!--Card Prduct in home Search and show product -->
     <md-card *ngIf="!checkInsert">
-      <form>
-        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
-          <md-select placeholder="Category" fxFlex="20">
-            <md-option value="food">
-              ນິຍາຍ
-            </md-option>
-            <md-option value="food">
-              ນິຍາຍ
-            </md-option>
-          </md-select>
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
+        <md-select placeholder="Category" [(ngModel)]="cateSearch" fxFlex="20">
+          <md-option value="all" (click)="categoriesSearch('all')">
+            ທັງໝົດ
+          </md-option>
+          <md-option value="{{category.$key}}" *ngFor="let category of categories" (click)="categoriesSearch(category.$key)">{{category.name}}</md-option>
+        </md-select>
 
-          <md-input-container fxFlex="30">
-            <input mdInput placeholder="Search" value="">
-          </md-input-container>
-          <button md-raised-button color="primary" type="submit">
-            <md-icon>search</md-icon>
-          </button>
-
-        </div>
-      </form>
+        <md-input-container fxFlex="30">
+          <input mdInput placeholder="Search" value="" [(ngModel)]="bookSearch">
+        </md-input-container>
+        <button md-raised-button color="primary" type="button">
+          <md-icon>search</md-icon>
+        </button>
+      </div>
     </md-card>
 
     <!--Card Product-->
@@ -141,8 +136,16 @@
           </button>
         </md-card>
       </md-grid-tile>
-
     </md-grid-list>
+
+    <div class="divRefresh" *ngIf="!checkInsert">
+      <div *ngIf="checkLoadMore">
+        <a md-button class="refresh" *ngIf="!checkRefresh" (click)="loadMore()">&#8635;</a>
+        <a md-button class="refresh" *ngIf="checkRefresh">
+          <loaders-css [loader]="'ball-beat'" [loaderClass]="'my-loader'"></loaders-css>
+        </a>
+      </div>
+    </div>
 
   </div>
 
